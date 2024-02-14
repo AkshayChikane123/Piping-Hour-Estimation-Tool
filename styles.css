@@ -1,0 +1,278 @@
+/* CSS styles similar to Neilsoft website */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the page fills the viewport */
+}
+
+.header, .footer {
+    background-color: #1A1A1A;
+    color: #fff;
+    height: 15vh; /* 15% of viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.header img, .footer img {
+    height: 50px;
+    width: auto;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    
+}
+
+
+
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-calculate {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn-danger {
+    background-color: #f37d74;
+}
+
+.btn-save {
+    background-color:#4CAF50 ;
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-select {
+    background-color:#4CAF50 ;
+    color: white;
+
+}
+
+.btn-estimate{ 
+
+    background-color:  #f0ad4e;
+}
+
+
+/* buttons section end */
+
+
+
+.container-effort-estimation {
+    width: 75%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    flex-grow: 1; /* Grow to fill remaining space */
+    overflow-y: auto; /* Add scroll if needed */
+}
+
+
+/* Add your custom styles here */
+
+
+/* Main Content Container */
+
+
+
+
+.container {
+        width: 75%;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        background-color: #fff;
+        flex-grow: 1; /* Grow to fill remaining space */
+        overflow-y: auto; /* Add scroll if needed */
+    }
+
+.container-inner {
+    display: flex;
+    justify-content: space-between ;
+    height: 500px;
+    width: 75vw;
+    margin-left: 12.5vw;
+    font-weight: 500;
+
+}
+
+/* Deliverables and Dropdown Container Styles */
+.deliverables-container, .dropdown-container {
+    width: calc(50% - 30px); /* Equal width for both containers with spacing */
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+.dropdown-container {
+    padding: 10px;
+    border-radius: 30px;
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    
+}
+
+
+/* Inside your styles.css file
+This field is for input box and dropdown box in Modelling confirmation window
+
+/* */
+/* Inside your styles.css file */
+.input-row {
+    display: flex; /* Use flexbox layout */
+    align-items: flex-start; /* Align items vertically to the start of the container */
+    margin-bottom: 10px; /* Adjust vertical spacing between input rows */
+    flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+}
+
+.label-container {
+    width: 200px; /* Adjust width of label container */
+}
+
+.input-container {
+    width: calc(100% - 200px); /* Adjust width of input container to fill remaining space */
+    margin-left: auto; /* Adjust horizontal spacing between label and input */
+}
+
+.select-container {
+    width: calc(100% - 200px); /* Adjust width of select container to fill remaining space */
+    margin-left: 10px; /* Adjust horizontal spacing between label and select */
+}
+
+/* Optional: Adjust styles for select element */
+select {
+    width: 100%; /* Make select element fill its container */
+}
+
+.small-input {
+    width: 50px; /* Adjust the width as needed */
+}
+
+
+
+
+/* Media Query for Responsive Design */
+@media screen and (max-width: 768px) {
+    .container-inner {
+        flex-direction: column;
+    }
+
+    .deliverables-container, .dropdown-container {
+        width: 100%;
+    }
+}
+
+
+
+/* Custom CSS for form container */
+.custom-form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for input elements */
+
+
+label {
+    font-weight:bolder;/* Apply bold font style to labels */
+    
+}
+
+
+***********************
+
+
+/* CSS for the floating form table */
+.floating-form-container {
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 40%;
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+    z-index: 999;
+    font-size: 14px; /* Adjust font size as needed */
+    line-height: 1; /* Minimize distance between rows */
+    overflow: auto; /* Add scrollbar if necessary */
+}
+
+.floating-form-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.floating-form-container th, .floating-form-container td {
+    border: 1px solid black;
+    padding: 5px; /* Adjust padding as needed */
+    text-align: center;
+}
+
+/* CSS for the input boxes */
+.floating-form-container input[type="text"],
+.floating-form-container input[type="number"] {
+    height: 20px; /* Adjust height of input boxes */
+    width: 30%; /* Adjust width of input boxes */
+}
+
+/* CSS for the "Efforts for Overall Project Execution" table */
+.container-effort-estimation table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.container-effort-estimation th, .container-effort-estimation td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+.floating-form-container th, .floating-form-container td {
+    border: 1px solid black;
+    padding: 5px; /* Adjust padding as needed */
+    text-align: center;
+    min-width: 20px; /* Set minimum width for columns */
+}
+
+.floating-form-container .third-column {
+    width: 40%; /* Adjust width of the third column */
+}
+
+
+********************
