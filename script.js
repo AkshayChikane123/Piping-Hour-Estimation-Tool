@@ -1,4 +1,3 @@
-
 // JavaScript code for adding, deleting, saving, and calculating rows dynamically
 const inputRows = document.getElementById('inputRows');
 
@@ -63,9 +62,11 @@ function calculateRow(input) {
         row.querySelector('input[name="valvesPID[]"]').value = valvesPID;
         row.querySelector('input[name="lineSegments[]"]').value = lineSegments;
        
+        console.log(calculateRow);
         // Return calculated values
-        return {
-            effortsForVolumeCreation: bendsTeesReducer + totalEquipmentsPID + valvesPID + lineSegments,
+
+        return obj1 = {
+            effortsForVolumeCreation:bendsTeesReducer + totalEquipmentsPID + valvesPID + lineSegments,
             effortsForCentrelineCreation: lineSegments,
             creationOfLineList: lineSegments,
             effortsFor3DMarkups: lineSegments,
@@ -84,57 +85,6 @@ function calculateRow(input) {
        
     }
 }
-
-
-// Declare variables to store values for each item
-// let effortsForVolumeCreation = 0;
-// let effortsForCentrelineCreation = 0;
-// let creationOfLineList = 0;
-// let effortsFor3DMarkups = 0;
-// let effortsFor3DModelling = 0;
-// let effortsForEquipmentDevelopment = 0;
-// let adminSetupAndProposal = 0;
-// let plotPlan = 0;
-// let equipmentLayouts = 0;
-// let pAndID = 0;
-// let pfd = 0;
-// let pipingIsometrics = 0;
-// let bulkMTO = 0;
-// let equipmentTagging = 0;
-// let nozzleOrientations = 0;
-//    Retrieve values from input fields
-// const effortsForVolumeCreation = parseInt(document.querySelector('input[name="effortsForVolumeCreation"]').value);
-// const effortsForCentrelineCreation = parseInt(document.querySelector('input[name="effortsForCentrelineCreation"]').value);
-// const creationOfLineList = parseInt(document.querySelector('input[name="creationOfLineList"]').value);
-// const effortsFor3DMarkups = parseInt(document.querySelector('input[name="effortsFor3DMarkups"]').value);
-// const effortsFor3DModelling = parseInt(document.querySelector('input[name="effortsFor3DModelling"]').value);
-// const effortsForEquipmentDevelopment = parseInt(document.querySelector('input[name="effortsForEquipmentDevelopment"]').value);
-// const adminSetupAndProposal = parseInt(document.querySelector('input[name="adminSetupAndProposal"]').value);
-// const plotPlan = parseInt(document.querySelector('input[name="plotPlan"]').value);
-// const equipmentLayouts = parseInt(document.querySelector('input[name="equipmentLayouts"]').value);
-// const pAndID = parseInt(document.querySelector('input[name="pAndID"]').value);
-// const pfd = parseInt(document.querySelector('input[name="pfd"]').value);
-// const pipingIsometrics = parseInt(document.querySelector('input[name="pipingIsometrics"]').value);
-// const bulkMTO = parseInt(document.querySelector('input[name="bulkMTO"]').value);
-// const equipmentTagging = parseInt(document.querySelector('input[name="equipmentTagging"]').value);
-// const nozzleOrientations = parseInt(document.querySelector('input[name="nozzleOrientations"]').value);
-
-// // Calculate total efforts for different tasks
-// const pipeModelling = effortsForVolumeCreation + effortsForCentrelineCreation + creationOfLineList + effortsFor3DMarkups + effortsFor3DModelling;
-// const equipmentModelling = effortsForEquipmentDevelopment;
-// const adminSetupAndProposalTotal = adminSetupAndProposal;
-// const deliverables = plotPlan + equipmentLayouts + pAndID + pfd + pipingIsometrics + bulkMTO + equipmentTagging + nozzleOrientations;
-
-// // Populate the "Efforts for Overall Project Execution" table
-// document.getElementById('pipeModelling').textContent = pipeModelling;
-// document.getElementById('equipmentModelling').textContent = equipmentModelling;
-// document.getElementById('adminSetupAndProposal').textContent = adminSetupAndProposalTotal;
-// document.getElementById('deliverables').textContent = deliverables;
-// document.getElementById('totalEfforts').textContent = pipeModelling + equipmentModelling + adminSetupAndProposalTotal + deliverables;
-
-
-
-
 
 
 // Updated CODE
@@ -286,6 +236,9 @@ function generateFloatingFormTable() {
      { name: 'Nozzle Orientations', category: 'Deliverables Section', defaultTime: 10 },
      // Add more rows as needed with their respective default values
  ];
+     
+
+
 
  // Table rows with predefined names, categories, and default values
  itemData.forEach((item, index) => {
@@ -328,10 +281,18 @@ function generateFloatingFormTable() {
     floatingFormContainer.style.padding = '10px';
     floatingFormContainer.style.zIndex = '999';
     floatingFormContainer.style.overflow = 'auto';
+
+    return newData = itemData;
 }
 
 // Function to submit the floating form
 function submitFloatingForm() {
+
+
+    console.log(obj1,'obj');
+    
+
+    // console.log(pipeModelling, 'pipeM');
     // Logic to handle form submission
     // This is where you can further execute the logic for "Efforts for Overall Project Execution"
     // Once the submission is complete, you can remove or hide the floating form container
@@ -345,46 +306,22 @@ function submitFloatingForm() {
 }
 
 
-// // Function to submit the floating form
-// function submitFloatingForm() {
-//     // Logic to handle form submission
-//     // This is where you can further execute the logic for "Efforts for Overall Project Execution"
-//     // Once the submission is complete, you can remove or hide the floating form container
-//     const floatingFormContainer = document.querySelector('.floating-form-container');
-//     floatingFormContainer.remove();
-
-//     // Call the function to populate the "Efforts for Overall Project Execution" table
-//     populateEffortsTable();
-
-//     // Fill the input fields with data from the "Efforts for Overall Project Execution" table
-//     fillInputFieldsFromEffortsTable();
-// }
-
-// // Function to fill input fields from the "Efforts for Overall Project Execution" table
-// function fillInputFieldsFromEffortsTable() {
-//     const pipeModelling = parseInt(document.getElementById('pipeModelling').textContent);
-//     const equipmentModelling = parseInt(document.getElementById('equipmentModelling').textContent);
-//     const adminSetupAndProposal = parseInt(document.getElementById('adminSetupAndProposal').textContent);
-//     const deliverables = parseInt(document.getElementById('deliverables').textContent);
-
-//     // Fill the input fields with the calculated values
-//     document.querySelector('input[name="effortsForVolumeCreation"]').value = pipeModelling; // Adjust the input field name accordingly
-//     document.querySelector('input[name="effortsForCentrelineCreation"]').value = pipeModelling; // Adjust the input field name accordingly
-//     // Fill other input fields with respective values
-// }
-
-
-
 
 // Function to populate the "Efforts for Overall Project Execution" table
 function populateEffortsTable() {
+
+    
       // Get data from the first table (pipingForm)
     const pipingFormRows = document.querySelectorAll('#pipingForm tbody tr');
     
      // Array to store input values for each row
     const inputValues = [];
-
-    
+   console.log(newData,'itemData');
+    const pipeModelling = ((obj1.effortsForVolumeCreation)*newData[0].defaultTime  + (obj1.effortsForCentrelineCreation)*newData[1].defaultTime + (obj1.creationOfLineList)*newData[2].defaultTime + (obj1.effortsFor3DMarkups)*newData[3].defaultTime + (obj1.effortsFor3DModelling)*newData[4].defaultTime)/60;
+    const equipmentModelling = (obj1.effortsForEquipmentDevelopment*newData[5].defaultTime)/60;
+    const adminSetupAndProposalTotal = (obj1.adminSetupAndProposal*newData[6].defaultTime)/60;
+    const deliverables = ((obj1.plotPlan)*newData[7].defaultTime + (obj1.equipmentLayouts)*newData[8].defaultTime + (obj1.pAndID)*newData[9].defaultTime + (obj1.pfd)*newData[10].defaultTime + (obj1.pipingIsometrics)*newData[11].defaultTime + (obj1.bulkMTO)*newData[12].defaultTime + (obj1.equipmentTagging)*newData[13].defaultTime  + (obj1.nozzleOrientations)*newData[14].defaultTime)/60 ;
+    const totalEfforts = pipeModelling + equipmentModelling +adminSetupAndProposalTotal + deliverables;
 
     // Create table HTML with headers
     let tableHTML = `
@@ -404,34 +341,29 @@ function populateEffortsTable() {
             <tbody>
     `;
 
-
-    // Initialize variables to store calculated values
-    // let totalPipeModelingEfforts = 0;
-    // let totalEquipmentModellingEfforts = 0;
-    // let totalAdminSetupAndProposalEfforts = 0;
-    // let totalDeliverablesEfforts = 0;
+    
 
     // Iterate over rows in the first table and populate the new table
-    pipingFormRows.forEach((row, index) => {
+        pipingFormRows.forEach((row, index) => {
         const siteName = row.querySelector('input[name="siteName[]"]').value;
-
+        // console.log(pipeModelling);
+        // const pipeModelling =row.querySelector('input[name="lineCounts[]"]').value;
         
 
         tableHTML += `
             <tr>
                 <td>${index + 1}</td>
                 <td>${siteName}</td>
-                <td><input type="number" name="pipeModelling[]" required></td>
-                <td><input type="number" name="equipmentModelling[]" required></td>
-                <td><input type="number" name="adminSetupAndProposal[]" required></td>
-                <td><input type="number" name="deliverables[]" required></td>
-                <td><input type="number" name="totalEfforts[]" readonly></td>
+                <td>${pipeModelling}  </td>
+                <td>${equipmentModelling}</td>
+                <td>${adminSetupAndProposalTotal}</td>
+                <td>${deliverables}</td>
+                <td>${totalEfforts} hours</td>
             </tr>
         `;
     });
        
-     
-
+   
 
     // Close table HTML
     tableHTML += `
@@ -440,7 +372,6 @@ function populateEffortsTable() {
     `;
 
     
-
     // Append the table to the section with ID "totalHoursSection"
     const totalHoursSection = document.getElementById('totalHoursSection');
     totalHoursSection.innerHTML = tableHTML;
@@ -453,72 +384,3 @@ function populateEffortsTable() {
 const calculateTotalHoursButton = document.querySelector('.btn-calculate');
 calculateTotalHoursButton.addEventListener('click', generateFloatingFormTable);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// important logic for calculate total hours button and for the table of
-//  *****Efforts for Overall Project Execution****
-
-
-// // Function to calculate efforts for Pipe Modeling
-// function calculatePipeModelingEfforts() {
-//     // Logic to calculate efforts for Pipe Modeling-
-
-//     return pipeModelingEfforts;
-// }
-
-// // Function to calculate efforts for Equipment Modelling
-// function calculateEquipmentModellingEfforts() {
-//     // Logic to calculate efforts for Equipment Modelling
-
-//     equipmentModellingEfforts = effortsForEquipmentDevelopment;
-
-//     return equipmentModellingEfforts;
-// }
-
-// // Function to calculate efforts for Admin Setup & Proposal
-// function calculateAdminSetupAndProposalEfforts() {
-//     // Logic to calculate efforts for Admin Setup & Proposal
-    
-//     return adminSetupAndProposalEfforts;
-// }
-
-// // Function to calculate efforts for Deliverables
-// function calculateDeliverablesEfforts() {
-//     // Logic to calculate efforts for Deliverables
-//     return deliverablesEfforts;
-// }
-
-// Function to calculate total efforts in hours
-// function calculateTotalEfforts() {
-//     // Call individual calculation functions and sum up the efforts
-//     const pipeModelingEfforts = calculatePipeModelingEfforts();
-//     const equipmentModellingEfforts = calculateEquipmentModellingEfforts();
-//     const adminSetupAndProposalEfforts = calculateAdminSetupAndProposalEfforts();
-//     const deliverablesEfforts = calculateDeliverablesEfforts();
-
-//     const totalEfforts = pipeModelingEfforts + equipmentModellingEfforts + adminSetupAndProposalEfforts + deliverablesEfforts;
-
-//     return totalEfforts;
-// }
