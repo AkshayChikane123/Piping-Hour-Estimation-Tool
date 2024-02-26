@@ -1,6 +1,10 @@
 // JavaScript code for adding, deleting, saving, and calculating rows dynamically
 const inputRows = document.getElementById('inputRows');
 
+// Flag to track if all rows have been saved
+
+let allRowsSaved = false;
+
 // Function to add rows dynamically
 function addRow() {
     const rowCount = inputRows.children.length;
@@ -37,12 +41,33 @@ function deleteRow(btn) {
     }
 }
 
-// Function to save row (for demonstration, it alerts the row data)
+// // Function to save row (for demonstration, it alerts the row data)
+// function saveRow(btn) {
+//     const row = btn.parentNode.parentNode;
+//     const rowData = Array.from(row.querySelectorAll('input')).map(input => input.value);
+   
+//     alert('Saved Row Data:\n' + rowData.join('\n'));
+// }
+
 function saveRow(btn) {
     const row = btn.parentNode.parentNode;
     const rowData = Array.from(row.querySelectorAll('input')).map(input => input.value);
     alert('Saved Row Data:\n' + rowData.join('\n'));
+    
+    // Mark row as saved
+    row.dataset.saved = true;
+    
+    // Check if all rows have been saved
+    checkAllRowsSaved();
 }
+
+// Function to check if all rows have been saved
+function checkAllRowsSaved() {
+    const allRows = document.querySelectorAll('#inputRows tr');
+    allRowsSaved = Array.from(allRows).every(row => row.dataset.saved === "true");
+}
+
+
 
 
 function calculateRow(input) {
@@ -87,8 +112,18 @@ function calculateRow(input) {
 }
 
 
+
 // Updated CODE
 function selectRequiredDeliverables() {
+// Check if all rows have been saved
+if (!allRowsSaved) {
+    alert('Please Add and Save The Project First');
+    return;
+}
+
+
+
+
     const deliverables = [
         'Inspection Isometrics', 'Plot Plan', '3d Model (.dwg)', '3d Model (.nwd)', 'P&ID Updation', 
         'P&ID Markups', 'P&ID (New) Creation', 'PFD', 'Equipment / Component Tagging', 
@@ -191,10 +226,25 @@ const deliverableSection = document.getElementById('deliverableSection');
 
 }
 
+//********************
+
+// Flag to track if "Select Required Deliverables" button is clicked
+let deliverablesButtonClicked = false;
+let totalHoursCalculated = false;
+
 // Floating Form for input to the calculate total hours button
 
 // Function to generate the floating form table
 function generateFloatingFormTable() {
+        
+    // Check if "Select Required Deliverables" button is clicked
+    if (!deliverablesButtonClicked) {
+        alert('Please click the "Select Required Deliverables" button first.');
+        return;
+    }
+
+
+
     const floatingFormContainer = document.createElement('div');
     floatingFormContainer.classList.add('floating-form-container');
 
@@ -204,7 +254,9 @@ function generateFloatingFormTable() {
     const tfoot = document.createElement('tfoot');
 
      // Table headers
+     
      thead.innerHTML = `
+     
      <tr>
          <th rowspan="2" style="text-align: center;">Sr No</th>
          <th rowspan="2" style="text-align: center;">Item Name</th>
@@ -231,7 +283,7 @@ function generateFloatingFormTable() {
      { name: 'P&ID', category: 'Deliverables Section', defaultTime: 180 },
      { name: 'PFD', category: 'Deliverables Section', defaultTime: 45 },
      { name: 'Piping Isometrics', category: 'Deliverables Section', defaultTime: 180 },
-     { name: 'Bulk MTO', category: 'Deliverables Section', defaultTime: 120 },
+     { name: 'Bulk MTO', category: 'Deliverables Section', defaultTime: 20 },
      { name: 'EquipmentTagging', category: 'Deliverables Section', defaultTime: 10 },
      { name: 'Nozzle Orientations', category: 'Deliverables Section', defaultTime: 10 },
      // Add more rows as needed with their respective default values
@@ -258,7 +310,7 @@ function generateFloatingFormTable() {
     // Submit button
     tfoot.innerHTML = `
         <tr>
-            <td colspan="3"><button type="button" onclick="submitFloatingForm()">Submit</button></td>
+            <td colspan="5"><button type="button" onclick="submitFloatingForm()">Submit</button></td>
         </tr>
     `;
 
@@ -284,6 +336,31 @@ function generateFloatingFormTable() {
 
     return newData = itemData;
 }
+
+// Function to update default time values
+function updateDefaultTime(input, index) {
+    const newValue = parseInt(input.value);
+    if (!isNaN(newValue)) {
+        itemData[index].defaultTime = newValue;
+    }
+}
+// Event listener for the "Select Required Deliverables" button
+document.addEventListener('DOMContentLoaded', function() {
+    const selectDeliverablesButton = document.querySelector('.btn-select');
+    selectDeliverablesButton.addEventListener('click', function() {
+        deliverablesButtonClicked = true;
+    });
+});
+
+
+
+
+// // Event listener for the "Select Required Deliverables" button
+// const selectDeliverablesButton = document.querySelector('.btn-select-deliverables');
+// selectDeliverablesButton.addEventListener('click', function() {
+//     deliverablesButtonClicked = true;
+// });
+
 
 // Function to submit the floating form
 function submitFloatingForm() {
@@ -313,15 +390,7 @@ function populateEffortsTable() {
     
       // Get data from the first table (pipingForm)
     const pipingFormRows = document.querySelectorAll('#pipingForm tbody tr');
-    
-     // Array to store input values for each row
-    const inputValues = [];
-   console.log(newData,'itemData');
-    const pipeModelling = ((obj1.effortsForVolumeCreation)*newData[0].defaultTime  + (obj1.effortsForCentrelineCreation)*newData[1].defaultTime + (obj1.creationOfLineList)*newData[2].defaultTime + (obj1.effortsFor3DMarkups)*newData[3].defaultTime + (obj1.effortsFor3DModelling)*newData[4].defaultTime)/60;
-    const equipmentModelling = (obj1.effortsForEquipmentDevelopment*newData[5].defaultTime)/60;
-    const adminSetupAndProposalTotal = (obj1.adminSetupAndProposal*newData[6].defaultTime)/60;
-    const deliverables = ((obj1.plotPlan)*newData[7].defaultTime + (obj1.equipmentLayouts)*newData[8].defaultTime + (obj1.pAndID)*newData[9].defaultTime + (obj1.pfd)*newData[10].defaultTime + (obj1.pipingIsometrics)*newData[11].defaultTime + (obj1.bulkMTO)*newData[12].defaultTime + (obj1.equipmentTagging)*newData[13].defaultTime  + (obj1.nozzleOrientations)*newData[14].defaultTime)/60 ;
-    const totalEfforts = pipeModelling + equipmentModelling +adminSetupAndProposalTotal + deliverables;
+  
 
     // Create table HTML with headers
     let tableHTML = `
@@ -346,20 +415,45 @@ function populateEffortsTable() {
     // Iterate over rows in the first table and populate the new table
         pipingFormRows.forEach((row, index) => {
         const siteName = row.querySelector('input[name="siteName[]"]').value;
+        const lineCounts = parseInt(row.querySelector('input[name="lineCounts[]"]').value);
+        const calculatedValues = calculateRow(row.querySelector('input[name="lineCounts[]"]'));
+
+
+
+        const inputValues = [];
+        console.log(newData,'itemData');
+         const pipeModelling = ((obj1.effortsForVolumeCreation)*newData[0].defaultTime  + (obj1.effortsForCentrelineCreation)*newData[1].defaultTime + (obj1.creationOfLineList)*newData[2].defaultTime + (obj1.effortsFor3DMarkups)*newData[3].defaultTime + (obj1.effortsFor3DModelling)*newData[4].defaultTime)/60;
+         const equipmentModelling = (obj1.effortsForEquipmentDevelopment*newData[5].defaultTime)/60;
+         const adminSetupAndProposalTotal = (obj1.adminSetupAndProposal*newData[6].defaultTime)/60;
+         const deliverables = ((obj1.plotPlan)*newData[7].defaultTime + (obj1.equipmentLayouts)*newData[8].defaultTime + (obj1.pAndID)*newData[9].defaultTime + (obj1.pfd)*newData[10].defaultTime + (obj1.pipingIsometrics)*newData[11].defaultTime + (obj1.bulkMTO)*newData[12].defaultTime + (obj1.equipmentTagging)*newData[13].defaultTime  + (obj1.nozzleOrientations)*newData[14].defaultTime)/60 ;
+         const totalEfforts = pipeModelling + equipmentModelling +adminSetupAndProposalTotal + deliverables;
+     
         // console.log(pipeModelling);
         // const pipeModelling =row.querySelector('input[name="lineCounts[]"]').value;
         
+    // pipingFormRows.forEach((row, index) => {
+    //     const siteName = row.querySelector('input[name="siteName[]"]').value;
+    //     const lineCounts = parseInt(row.querySelector('input[name="lineCounts[]"]').value);
+    //     const calculatedValues = calculateRow(row.querySelector('input[name="lineCounts[]"]'));
+
+    //     const pipeModelling = (calculatedValues.effortsForVolumeCreation * newData[0].defaultTime) / 60;
+    //     const equipmentModelling = (calculatedValues.effortsForEquipmentDevelopment * newData[5].defaultTime) / 60;
+    //     const adminSetupAndProposalTotal = (calculatedValues.adminSetupAndProposal * newData[6].defaultTime) / 60;
+    //     const deliverables = ((calculatedValues.plotPlan) * newData[7].defaultTime + (calculatedValues.equipmentLayouts) * newData[8].defaultTime + (calculatedValues.pAndID) * newData[9].defaultTime + (calculatedValues.pfd) * newData[10].defaultTime + (calculatedValues.pipingIsometrics) * newData[11].defaultTime + (calculatedValues.bulkMTO) * newData[12].defaultTime + (calculatedValues.equipmentTagging) * newData[13].defaultTime + (calculatedValues.nozzleOrientations) * newData[14].defaultTime) / 60;
+    //     const totalEfforts = pipeModelling + equipmentModelling + adminSetupAndProposalTotal + deliverables;
+
+     
 
         tableHTML += `
-            <tr>
-                <td>${index + 1}</td>
-                <td>${siteName}</td>
-                <td>${pipeModelling}  </td>
-                <td>${equipmentModelling}</td>
-                <td>${adminSetupAndProposalTotal}</td>
-                <td>${deliverables}</td>
-                <td>${totalEfforts} hours</td>
-            </tr>
+        <tr>
+        <td>${index + 1}</td>
+        <td>${siteName}</td>
+        <td>${pipeModelling.toFixed(2)}</td>
+        <td>${equipmentModelling.toFixed(2)}</td>
+        <td>${adminSetupAndProposalTotal.toFixed(2)}</td>
+        <td>${deliverables.toFixed(2)}</td>
+        <td>${totalEfforts.toFixed(2)} hours</td>
+    </tr>
         `;
     });
        
@@ -378,9 +472,42 @@ function populateEffortsTable() {
 
     // Scroll to the section with ID "totalHoursSection"
     totalHoursSection.scrollIntoView({ behavior: 'smooth' });
+
+    totalHoursCalculated= true;
 }
 
-// Event listener for the "Calculate Total Hours" button
-const calculateTotalHoursButton = document.querySelector('.btn-calculate');
-calculateTotalHoursButton.addEventListener('click', generateFloatingFormTable);
+// // Event listener for the "Calculate Total Hours" button
+// const calculateTotalHoursButton = document.querySelector('.btn-calculate');
+// calculateTotalHoursButton.addEventListener('click', generateFloatingFormTable);
+document.addEventListener('DOMContentLoaded', function() {
+    const calculateTotalHoursButton = document.querySelector('.btn-calculate');
+    calculateTotalHoursButton.addEventListener('click', generateFloatingFormTable);
+});
 
+
+
+
+
+
+// *********TO DISPLAY PDF DOCUMENT*********
+
+function generateEstimate(){
+    if (!totalHoursCalculated) {
+        alert("First calculate total hours of the project .");
+        return;
+    }
+
+    const element = document.getElementById('pdfPreview');
+     
+    // Options for pdf generation
+    const options = {
+      margin: 0.5,
+      filename: 'converted_document.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+   
+    // Generate PDF
+    html2pdf().from(element).set(options).save()
+}

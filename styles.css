@@ -219,21 +219,35 @@ label {
 
 /* CSS for the floating form table */
 .floating-form-container {
+    
+    
     position: fixed;
     top: 20%;
     left: 30%;
     width: 40%;
-    background-color: white;
+    background-color: rgb(234, 210, 210);
     border: 1px solid black;
-    padding: 10px;
+    padding: 20px 10px;
     z-index: 999;
     font-size: 14px; /* Adjust font size as needed */
     line-height: 1; /* Minimize distance between rows */
     overflow: auto; /* Add scrollbar if necessary */
 }
 
+.floating-form-container .submit-button {
+    background-color: #4CAF50; /* Adjust background color */
+    color: white; /* Adjust text color */
+    padding: 10px 40px; /* Adjust padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Add border radius */
+    cursor: pointer;
+    font-size: 15px;
+}
+
 .floating-form-container table {
-    width: 100%;
+    margin-top: 5%;
+    margin-left:5%;
+    width: 90%;
     border-collapse: collapse;
 }
 
@@ -274,5 +288,3 @@ label {
     width: 40%; /* Adjust width of the third column */
 }
 
-
-********************
