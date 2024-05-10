@@ -107,7 +107,7 @@ function saveRow() {
     console.log("Saved Project Data:", projectData);
 
     // Trigger the function to calculate additional data
-    selectionFactors(); 
+    // selectionFactors(); 
 }
 
 // Add a default row when the page loads
@@ -179,7 +179,7 @@ function selectionFactors() {
         for (const [component, value] of Object.entries(calculatedData)) {
             const defaultTime = defaultTimes[component];
             if (defaultTime) {
-                estimatedTimes[component] = value * defaultTime;
+                estimatedTimes[component] = defaultTime;
             }
         }
 
@@ -200,81 +200,181 @@ function selectionFactors() {
 }
 
 function generateComponentTable(calculatedSiteData) {
+    // Function to calculate subtotal
+    function calculateSubtotal() {
+        // Iterate over each site
+        for (const siteName in calculatedSiteData) {
+            let totalCounts = 0;
+            let totalEstimatedHours = 0;
+
+            // Iterate over each section
+            for (const sectionData of sections) {
+                const count = calculatedSiteData[siteName].calculatedData[sectionData.description] || 0;
+                const defaultTime = calculatedSiteData[siteName].estimatedTimes[sectionData.description] || defaultTimes[sectionData.description];
+                const estimatedHours = (count * defaultTime) / 60;
+
+                totalCounts += count;
+                totalEstimatedHours += estimatedHours;
+            }
+
+            // Update the subtotal cells
+            subtotalCells[siteName].count.textContent = totalCounts;
+            subtotalCells[siteName].hours.textContent = totalEstimatedHours.toFixed(2);
+        }
+    }
+
     const table = document.createElement("table");
-    table.classList.add("styled-table"); // Optional: Apply a CSS class for styling
+    table.classList.add("styled-table");
 
-    // Create table header row
-    const headerRow = document.createElement("tr");
-    
-    // Table headers: Section, Checkbox, Description, plus site-specific columns
-    const headers = ["Section", "Checkbox", "Description"];
-    headers.push(...Object.keys(calculatedSiteData)); // Site-specific headers
+    // Create the main header row and the sub-header row for multi-level headers
+    const mainHeaderRow = document.createElement("tr");
+    const subHeaderRow = document.createElement("tr");
 
-    headers.forEach((header) => {
+    // Main headers: #, Description, Section, Site Names with 3 sub-columns (Count, Default Time, Time in Hours)
+    const mainHeaders = ["#", "Description", "Section"];
+    mainHeaders.forEach((header) => {
         const th = document.createElement("th");
+        th.rowSpan = 2; // These headers span 2 rows
         th.textContent = header;
-        headerRow.appendChild(th);
+        mainHeaderRow.appendChild(th);
     });
-    table.appendChild(headerRow);
 
-    // Define the sections/components to be displayed in the table
+    // Site-specific headers with sub-columns for Count, Default Time, and Time in Hours
+    const subtotalCells = {}; // Object to store subtotal cells for each site
+    for (const siteName in calculatedSiteData) {
+        const th = document.createElement("th");
+        th.colSpan = 3; // Site header spans 3 columns
+        th.textContent = siteName;
+        mainHeaderRow.appendChild(th);
+
+        [" Comp Count", "Default Time ( Min)", "Total Time (Hours)"].forEach((subHeader) => {
+            const subTh = document.createElement("th");
+            subTh.textContent = subHeader;
+            subHeaderRow.appendChild(subTh);
+        });
+
+        // Create subtotal cells for each site
+        const subtotalCountCell = document.createElement("td");
+        const subtotalHoursCell = document.createElement("td");
+        subtotalCells[siteName] = { count: subtotalCountCell, hours: subtotalHoursCell };
+    }
+
+    // Append the main header and the sub-header rows to the table
+    table.appendChild(mainHeaderRow);
+    table.appendChild(subHeaderRow);
+
+    // Define the sections/components for the table
     const sections = [
-        { section: "Pipe Modelling Section", description: "Efforts for Volume Creation" },
-        { section: "Pipe Modelling Section", description: "Efforts for Centreline Creation" },
-        { section: "Pipe Modelling Section", description: "Creation of Line List" },
-        { section: "Pipe Modelling Section", description: "Efforts for 3D Markups" },
-        { section: "Pipe Modelling Section", description: "Efforts for 3D Modelling" },
+        { section: "Piping", description: "Efforts for Volume Creation" },
+        { section: "Piping", description: "Efforts for Centreline Creation" },
+        { section: "Piping", description: "Creation of Line List" },
+        { section: "Piping", description: "Efforts for 3D Markups" },
+        { section: "Piping", description: "Efforts for 3D Modelling" },
         { section: "Equipment Modelling", description: "Efforts for Equipment Development" },
         { section: "Admin Setup & Proposal", description: "Admin Setup & Proposal" },
-        { section: "Deliverables Section", description: "Plot Plan" },
-        { section: "Deliverables Section", description: "Equipment Layouts" },
-        { section: "Deliverables Section", description: "P&ID" },
-        { section: "Deliverables Section", description: "PFD" },
-        { section: "Deliverables Section", description: "Piping Isometrics" },
-        { section: "Deliverables Section", description: "Bulk MTO" },
-        { section: "Deliverables Section", description: "Equipment Tagging" },
-        { section: "Deliverables Section", description: "Nozzle Orientations" },
+        { section: "Deliverables", description: "Plot Plan" },
+        { section: "Deliverables", description: "Equipment Layouts" },
+        { section: "Deliverables", description: "P&ID" },
+        { section: "Deliverables", description: "PFD" },
+        { section: "Deliverables", description: "Piping Isometrics" },
+        { section: "Deliverables", description: "Bulk MTO" },
+        { section: "Deliverables", description: "Equipment Tagging" },
+        { section: "Deliverables", description: "Nozzle Orientations" },
     ];
 
     // Create rows for each section/component
-    sections.forEach((sectionData) => {
+    sections.forEach((sectionData, index) => {
         const row = document.createElement("tr");
 
-        // Section name column
-        const sectionCell = document.createElement("td");
-        sectionCell.textContent = sectionData.section;
-        row.appendChild(sectionCell);
-
-        // Checkbox column
-        const checkboxCell = document.createElement("td");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkboxCell.appendChild(checkbox);
-        row.appendChild(checkboxCell);
+        // Index column
+        const numberCell = document.createElement("td");
+        numberCell.textContent = index + 1; // Display the row index
+        row.appendChild(numberCell);
 
         // Description column
         const descriptionCell = document.createElement("td");
         descriptionCell.textContent = sectionData.description;
         row.appendChild(descriptionCell);
 
-        // Site-specific columns for counts and times
+        // Section name column
+        const sectionCell = document.createElement("td");
+        sectionCell.textContent = sectionData.section;
+        row.appendChild(sectionCell);
+
+        // Site-specific columns for Counts, Default Time (editable), and Time in Hours
         for (const siteName in calculatedSiteData) {
-            const countTimeCell = document.createElement("td");
             const calculatedData = calculatedSiteData[siteName].calculatedData;
             const estimatedTimes = calculatedSiteData[siteName].estimatedTimes;
 
             const count = calculatedData[sectionData.description] || 0;
-            const estimatedTime = estimatedTimes[sectionData.description] || 0;
+            const defaultTime = estimatedTimes[sectionData.description] || 0;
+            const estimatedHours = ((count * defaultTime) / 60).toFixed(2);
 
-            countTimeCell.textContent = `${count} Nos / ${estimatedTime} Min`;
-            row.appendChild(countTimeCell);
+            // Count column
+            const countCell = document.createElement("td");
+            countCell.textContent = count;
+            row.appendChild(countCell);
+
+            // Default Time column (editable)
+            const defaultTimeCell = document.createElement("td");
+            const defaultTimeInput = document.createElement("input");
+            defaultTimeInput.type = "number";
+            defaultTimeInput.value = defaultTime; // Display the current default time
+            defaultTimeInput.min = 0; // Non-negative values
+            defaultTimeInput.addEventListener("change", (event) => {
+                const newDefaultTime = parseFloat(event.target.value);
+                if (!isNaN(newDefaultTime) && newDefaultTime >= 0) {
+                    // Recalculate the time in hours
+                    const newEstimatedHours = ((count * newDefaultTime) / 60).toFixed(2);
+                    estimatedTimes[sectionData.description] = newDefaultTime;
+                    estimatedHoursCell.textContent = newEstimatedHours; // Update display
+
+                    // Recalculate subtotal
+                    calculateSubtotal();
+                }
+            });
+            defaultTimeCell.appendChild(defaultTimeInput);
+            row.appendChild(defaultTimeCell);
+
+            // Estimated Time in Hours column
+            const estimatedHoursCell = document.createElement("td");
+            estimatedHoursCell.textContent = estimatedHours; // Display estimated hours
+            row.appendChild(estimatedHoursCell);
         }
 
         table.appendChild(row); // Add the row to the table
     });
 
-    return table;
+    // Create a subtotal row to sum the counts and estimated hours
+    const subtotalRow = document.createElement("tr");
+
+    // Empty cells for the first three columns
+    ["", "", ""].forEach(() => {
+        const emptyCell = document.createElement("td");
+        subtotalRow.appendChild(emptyCell);
+    });
+
+  // Append subtotal cells to the subtotal row
+for (const siteName in subtotalCells) {
+    subtotalRow.appendChild(subtotalCells[siteName].count); // Count cell
+
+    // Cell for displaying "Subtotal" text in the Default Time column
+    const subtotalDefaultTimeCell = document.createElement("td");
+    subtotalDefaultTimeCell.textContent = "Subtotal";
+    subtotalRow.appendChild(subtotalDefaultTimeCell);
+
+    subtotalRow.appendChild(subtotalCells[siteName].hours); // Hours cell
 }
+
+
+    table.appendChild(subtotalRow); // Add the subtotal row to the table
+
+    // Calculate subtotal immediately after generating the table
+    calculateSubtotal();
+
+    return table; // Return the generated table
+}
+
 
 
 
