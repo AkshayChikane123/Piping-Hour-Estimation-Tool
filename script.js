@@ -104,7 +104,7 @@ function saveRow() {
     alert("Project data for the following sites has been saved:\n" + siteNames.join(", "));
 
     // Log the detailed data to the console
-    console.log("Saved Primary Input Data:", projectData);
+    console.log("Saved Primary Data:", projectData);
 
     // Trigger the function to calculate additional data
     selectionFactors(); 
@@ -398,24 +398,48 @@ for (const siteName in subtotalCells) {
 }
 
 
+function generateDropdownContainer() {
+    // Generate and append the dropdown container
+    const dropdownContainer = document.createElement("div");
+    dropdownContainer.classList.add("dropdown-container");
 
-// Function to calculate total hours and log updated data
-function calculateTotalHours(updatedData) {
-    Object.keys(updatedData).forEach((siteName) => {
-        const rowData = updatedData[siteName];
-        const compCount = rowData['Comp Count'];
-        const defaultTime = rowData['Default Time (Min)'];
-        const totalHours = compCount * defaultTime / 60; // Convert minutes to hours
+    // Create a header for the dropdown
+    const dropdownHeader = document.createElement("h3");
+    dropdownHeader.textContent = "Modelling Confirmations";
+    dropdownHeader.style.textAlign = "center"; // Align the header text to center
 
-        // Update the rowData object with calculated data
-        rowData['Total Time (Hours)'] = totalHours;
+    dropdownHeader.style.fontWeight = "bold"; // Make the header bold
+    dropdownHeader.style.whiteSpace = "nowrap"; // Prevent text from wrapping
 
-        // Log the updated data
-        console.log(`Updated Data for Site: ${siteName}`);
-        console.log("Comp Count:", compCount);
-        console.log("Default Time (Min):", defaultTime);
-        console.log("Total Time (Hours):", totalHours);
+
+
+    dropdownContainer.appendChild(dropdownHeader);
+
+    // Create dropdown elements
+    const dropdownsForModConfirmations = [
+        { name: '1) LOD of Modelling', options: ['LOD 100', 'LOD 200', 'LOD 300']},
+        { name: '2) Pipe Support', options: ['Primary' ,'Out of Scope'] },
+        { name: '3) Equipment Modelling', options: ['Yes', 'No', '50%'] },
+        { name: '4) Specification Sheet', options: ['Yes', 'No'] }
+    ];
+
+    dropdownsForModConfirmations.forEach((dropdownData) => {
+        // Create a label for the dropdown
+        const dropdownLabel = document.createElement("label");
+        dropdownLabel.textContent = dropdownData.name;
+        dropdownContainer.appendChild(dropdownLabel);
+
+        // Create the dropdown select element
+        const dropdownSelect = document.createElement("select");
+        dropdownData.options.forEach((option) => {
+            const dropdownOption = document.createElement("option");
+            dropdownOption.textContent = option;
+            dropdownSelect.appendChild(dropdownOption);
+        });
+        dropdownContainer.appendChild(dropdownSelect);
     });
+
+    return dropdownContainer;
 }
 
 
