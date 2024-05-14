@@ -45,16 +45,28 @@
             </table>
             <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button>
             <button type="button" class="btn btn-save" onclick="saveRow(this)">Save Project Data</button>
-            <button type="button" class="btn btn-select" onclick="selectionFactors()">Selection Factors</button>
-            <button type="button" class="btn btn-calculate">Calculate Total Hours </button>
+            <!-- <button type="button" class="btn btn-select" onclick="displayDropdown()">Modelling Confirmations</button> -->
+
+            <button type="button" class="btn btn-calculate" onclick="calculateTotalHours(); scrollToFinalContainer()">Calculate Total Hours </button>
             <!-- Button to trigger the offcanvas -->
+            <button type="button" class="btn btn-select" onclick="updateSelection()">Update Selection</button>
+
             <button class="btn btn-estimate" type="button" onclick="generateEstimate()">Generate Estimation</button>
 
 
         </form>
     </div>
-    <div id="componentTableOutput" class="table-output"></div> <!-- Container for the generated table -->
+    <div id="componentTableOutput" class="table-output">
 
+
+    </div> <!-- Container for the generated table -->
+
+    <div class="container-middle">
+        <div class="dropdown-container" id="dropdownContainer"></div>
+        <div class="table-container" id="tableContainer"></div>
+        
+    </div>
+    <div class="container-lower" id="final-container"></div>
 
 
     <!-- Offcanvas structure -->
