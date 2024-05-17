@@ -207,6 +207,7 @@ function selectionFactors() {
         tableContainer.appendChild(componentTable);
         dropdownContainerElement.appendChild(dropdownContainer);
     }
+    // updateSelection();
 }
 
 function generateComponentTable(calculatedSiteData) {
@@ -275,7 +276,7 @@ function generateComponentTable(calculatedSiteData) {
 
     // Define the sections/components for the table
     const sections = [
-        { section: "Piping", description: "Efforts for Volume Creation" },
+        { section: "Piping", description: "Efforts for Volume Creation"},
         { section: "Piping", description: "Efforts for Centreline Creation" },
         { section: "Piping", description: "Creation of Line List" },
         { section: "Piping", description: "Efforts for 3D Markups" },
@@ -300,6 +301,12 @@ function generateComponentTable(calculatedSiteData) {
         const checkboxInput = document.createElement("input");
         checkboxInput.type = "checkbox";
         checkboxInput.classList.add("checkbox-input"); // Add a class for easier selection
+
+        // To mark each checkbox true
+        checkboxInput.checked = false;
+        
+        
+
         // Set up event listener for the checkbox
         checkboxInput.addEventListener("change", function(event) {
             const isChecked = event.target.checked;
@@ -393,7 +400,7 @@ for (const siteName in subtotalCells) {
 
     // Calculate subtotal immediately after generating the table
     calculateSubtotal();
-
+    // console.log(table);
     return table; // Return the generated table
 }
 
@@ -442,79 +449,171 @@ function generateDropdownContainer() {
     return dropdownContainer;
 }
 
+function updateSelection() {
+    let table = document.querySelector('.styled-table');
+    let siteData = {}; // Object to store site data
 
+    // Iterate over each row of the table
+    table.querySelectorAll('tr').forEach(function(row, rowIndex) {
+        if (rowIndex > 1) { // Skip header rows (index 0 and 1)
+            let cells = row.querySelectorAll('td');
 
+            // Extract fixed data from cells
+            let description = cells[1].textContent.trim();
+            let section = cells[2].textContent.trim();
 
-function calculateTotalHours(siteDataArray) {
+            // Initialize siteData object for the current site
+            for (let colIndex = 3; colIndex < cells.length; colIndex += 3) {
+                // Extract site name from corresponding header cell
+                let siteName = table.querySelector('th:nth-child(' + (colIndex / 3 + 3) + ')').textContent.trim();
 
-    // console.log("Saved Estimated Hours:", estimatedHours);
-    
-    // console.log("Saved Comp Count :", calculatedData);
-    
-    // console.log("Saved Site data Hours:",calculatedSiteData);
-    // Initialize variables to store selected data and options
-    const selectedData = siteDataArray || []; // Use provided site data or initialize as empty array
-    let selectedOption;
+                // Extract count and total hours for the current site
+                let count = parseInt(cells[colIndex].textContent.trim());
+                let totalHours = parseFloat(cells[colIndex + 2].textContent.trim());
 
-    // Get the selected option from the dropdown
-    selectedOption = document.querySelector("#dropdownContainer select").value;
+                // Initialize site data structure if it doesn't exist
+                if (!siteData[siteName]) {
+                    siteData[siteName] = {};
+                }
 
-    // Generate the HTML table structure
-    let tableHTML = `
-        <table>
-           <thead>
-            <tr> <th colspan="7" >Efforts for Overall Project Execution</tr></th>
-                <tr>
-                    <th>Sr No</th>
-                    <th>Site Name</th>
-                    <th>Efforts for Pipe Modeling</th>
-                    <th>Efforts for Equipment Modeling</th>
-                    <th>Efforts for Admin Setup & Proposal</th>
-                    <th>Efforts for Deliverables</th>
-                    <th>Total Efforts in Hours</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    // Iterate over each selected site
-    selectedData.forEach((siteData, index) => {
-        // Calculate total hours for the site based on selected option
-        const totalHours = calculate(siteData, selectedOption);
-
-        // Append a new row to the table
-        tableHTML += `
-            <tr>
-                <td>${siteData.srNo}</td>
-                <td>${siteData.siteName}</td>
-                <td>{/* Efforts for Pipe Modeling calculation */}</td>
-                <td>{/* Efforts for Equipment Modeling calculation */}</td>
-                <td>{/* Efforts for Admin Setup & Proposal calculation */}</td>
-                <td>{/* Efforts for Deliverables calculation */}</td>
-                <td>${totalHours}</td>
-            </tr>
-        `;
+                // Add data to siteData object for the current site and description
+                siteData[siteName][description] = {
+                    section: section,
+                    count: count,
+                    totalHours: totalHours
+                };
+            }
+        }
     });
 
-    // Close the HTML table structure
+    console.log('Site Data:', siteData);
+    return siteData;
+}
+
+
+function calculateTotalHours() {
+    const newObject = updateSelection(); // Get updated site data object
+
+    // Initialize objects to store totals for each section
+    let sectionTotals = {
+        piping: 0,
+        equipmentModelling: 0,
+        adminSetupProposal: 0,
+        deliverables: 0,
+        total: 0 // Total of all sections
+    };
+
+    // Create HTML for the table
+    let tableHTML = `
+    <table>
+        <thead>
+            <tr>
+                <th colspan="7">Efforts for Overall Project Execution</th>
+            </tr>
+            <tr>
+                <th>Sr No</th>
+                <th>Site Name</th>
+                <th>Efforts for Pipe Modeling</th>
+                <th>Efforts for Equipment Modeling</th>
+                <th>Efforts for Admin Setup & Proposal</th>
+                <th>Efforts for Deliverables</th>
+                <th>Total Efforts in Hours</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+    // Initialize counter for Sr No
+    let srNo = 1;
+
+    // Iterate over each site in newObject
+    for (const site in newObject) {
+        // Get the site name
+        let siteName = site;
+
+        // Initialize sums for current site
+        let pipingSum = 0;
+        let equipmentModellingSum = 0;
+        let adminSetupProposalSum = 0;
+        let deliverablesSum = 0;
+
+        // Iterate over each description in the current site
+        for (const description in newObject[site]) {
+            const section = newObject[site][description].section;
+            const totalHours = newObject[site][description].totalHours;
+
+            // Add total hours to respective section sum based on section type
+            if (section.includes('Piping')) {
+                pipingSum += totalHours;
+                sectionTotals.piping += totalHours;
+            } else if (section.includes('Equipment Modelling')) {
+                equipmentModellingSum += totalHours;
+                sectionTotals.equipmentModelling += totalHours;
+            } else if (section.includes('Admin Setup & Proposal')) {
+                adminSetupProposalSum += totalHours;
+                sectionTotals.adminSetupProposal += totalHours;
+            } else if (section.includes('Deliverables')) {
+                deliverablesSum += totalHours;
+                sectionTotals.deliverables += totalHours;
+            }
+        }
+
+        // Add row with calculated sums for the current site
+        tableHTML += `
+        <tr>
+            <td>${srNo}</td>
+            <td>${siteName}</td>
+            <td>${pipingSum.toFixed(2)}</td>
+            <td>${equipmentModellingSum.toFixed(2)}</td>
+            <td>${adminSetupProposalSum.toFixed(2)}</td>
+            <td>${deliverablesSum.toFixed(2)}</td>
+            <td>${(pipingSum + equipmentModellingSum + adminSetupProposalSum + deliverablesSum).toFixed(2)}</td>
+        </tr>`;
+
+        srNo++; // Increment Sr No for the next site
+    }
+
+    // Add subtotal row for section totals
     tableHTML += `
-            </tbody>
-        </table>
+    <tr>
+        <td colspan="2">Subtotal</td>
+        <td>${sectionTotals.piping.toFixed(2)}</td>
+        <td>${sectionTotals.equipmentModelling.toFixed(2)}</td>
+        <td>${sectionTotals.adminSetupProposal.toFixed(2)}</td>
+        <td>${sectionTotals.deliverables.toFixed(2)}</td>
+        <td>${(sectionTotals.piping + sectionTotals.equipmentModelling + sectionTotals.adminSetupProposal + sectionTotals.deliverables).toFixed(2)}</td>
+    </tr>
+    
     `;
 
-    // Get the container element where you want to display the table
+    tableHTML += `
+        </tbody>
+    </table>`;
+
     const container = document.getElementById("final-container");
-
-    // Insert the generated HTML table into the container
-    container.innerHTML = tableHTML;
+    container.innerHTML = tableHTML; // Display the table in the designated container
 }
 
-// Function to perform calculations using the selected data and option
-function calculate(siteData, selectedOption) {
-    // Perform your calculations here using the selectedData and selectedOption
-    // Return the calculated result
-    return 0; // Placeholder value, replace with actual calculation
-}
+
+
+// function calculate(siteData, selectedOption) {
+//     const { effortsForVolumeCreation, effortsForCentrelineCreation, creationOfLineList, effortsFor3DMarkups, effortsFor3DModelling, effortsForEquipmentDevelopment, adminSetupAndProposal, plotPlan, equipmentLayouts, pAndID, pfd, pipingIsometrics, bulkMTO, equipmentTagging, nozzleOrientations } = siteData;
+
+//     // const totalPipeModeling = (effortsForVolumeCreation + effortsForCentrelineCreation + creationOfLineList + effortsFor3DMarkups + effortsFor3DModelling) / 60;
+//     // const totalEquipmentModeling = (effortsForEquipmentDevelopment * defaultTimes.effortsForEquipmentDevelopment) / 60;
+//     // const totalAdminSetupAndProposal = (adminSetupAndProposal * defaultTimes.adminSetupAndProposal) / 60;
+//     // const totalDeliverables = ((plotPlan + equipmentLayouts + pAndID + pfd + pipingIsometrics + bulkMTO + equipmentTagging + nozzleOrientations) * defaultTimes.plotPlan) / 60;
+
+//     const totalHours = {
+//         pipeModeling: totalPipeModeling,
+//         equipmentModeling: totalEquipmentModeling,
+//         adminSetupAndProposal: totalAdminSetupAndProposal,
+//         deliverables: totalDeliverables,
+//         total: totalPipeModeling + totalEquipmentModeling + totalAdminSetupAndProposal + totalDeliverables
+//     };
+
+//     return totalHours;
+// }
+
 
 
 function scrollToFinalContainer() {
