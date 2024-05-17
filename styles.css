@@ -57,7 +57,8 @@ td {
 th {
     /* width: 50px; */
     background-color: rgb(228, 202, 99);
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 /* Default Input Styling */
@@ -89,6 +90,7 @@ input[type="number"] {
 
 table {
     table-layout: auto;
+    
     /* Default layout for variable widths */
     border-collapse: collapse;
 }
@@ -139,6 +141,11 @@ table {
     /* height: 30vh; */
     /* 70% of the container width */
 }
+
+
+.checkbox-input {
+    transform: scale(1.8); /* Increase the size of the checkbox */
+}
 /* CSS for the dropdown container */
 .dropdown-container {
     display: flex;
@@ -173,7 +180,13 @@ table {
     display: flex;
     justify-content: center;
     margin: auto;
-    height: 500px;
+    height: 50px;
+    margin-bottom: 400px;
     /* background-color: #a09797; */
     
+}
+
+.container-lower table tr{
+
+    border-collapse: collapse;
 }
