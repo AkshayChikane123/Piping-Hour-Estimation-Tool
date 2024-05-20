@@ -20,8 +20,8 @@
 
     <div class="container">
         <form id="pipingForm">
-            <h2> Project Hours Estimation Tool </h2>
-            <table>
+            <h2 id="table-heading1"> Project Hours Estimation Tool </h2>
+            <table id="headingTable">
                 <caption>
 
                 </caption>
@@ -42,33 +42,97 @@
                 <tbody id="inputRows">
                     <!-- JavaScript will populate rows here -->
                 </tbody>
+                <tfoot id="subtotalRow">
+                    <tr>
+                        <td colspan="2"><strong>Subtotal:</strong></td>
+                        <td id="subtotalLineCounts"></td>
+                        <td id="subtotalExpectedPID"></td>
+                        <td id="subtotalBendsTeesReducers"></td>
+                        <td id="subtotalEquipments"></td>
+                        <td id="subtotalValves"></td>
+                        <td id="subtotalLineSegments"></td>
+                        <td id="subtotalPipeSupport"></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
-            <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button>
-            <button type="button" class="btn btn-save" onclick="saveRow(this)">Save Project Data</button>
-            <!-- <button type="button" class="btn btn-select" onclick="displayDropdown()">Modelling Confirmations</button> -->
-
-            <button type="button" class="btn btn-calculate" onclick="calculateTotalHours(); scrollToFinalContainer()">Calculate Total Hours </button>
-            <!-- Button to trigger the offcanvas -->
-            <button type="button" class="btn btn-select" onclick="updateSelection()">Update Selection</button>
-
-            <button class="btn btn-estimate" type="button" onclick="generateEstimate()">Generate Estimation</button>
-
-
+           
         </form>
+        
+     
+    </div>
+    <div class="dropdown-container">
+        <h3 style="text-align: center; font-weight: bold; white-space: nowrap;">Modelling Confirmations</h3>
+        <label> LOD of Modelling</label>
+        <select>
+            <option>LOD 300</option>
+            <option>LOD 200</option>
+            <option>LOD 100</option>
+        </select>
+        <label> Pipe Support</label>
+        <select>
+            <option>Primary</option>
+            <option>Out of Scope</option>
+        </select>
+        <label>  Specification Sheet</label>
+        <select>
+            <option>No</option>
+            <option>Yes</option>
+        </select>
     </div>
     <div id="componentTableOutput" class="table-output">
 
 
     </div> <!-- Container for the generated table -->
-
+    <div class="button-container">
+        <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button> 
+        <button type="button" class="btn btn-primary" onclick="openSettingsModal()">Open Settings</button>
+        <button type="button" class="btn btn-save" onclick="saveRow(this)">Save Project Data</button>
+     
+        <button type="button" class="btn btn-calculate" onclick="calculateTotalHours(); scrollToFinalContainer()">Calculate Total Hours </button>
+        <button type="button" class="btn btn-select" onclick="showSelectedCells()">Update Selection</button>
+        <button class="btn btn-estimate" type="button" onclick="generateEstimate()">Generate Estimation</button>
+    </div>
     <div class="container-middle">
-        <div class="dropdown-container" id="dropdownContainer"></div>
+        <!-- <div class="dropdown-container" id="dropdownContainer"></div> -->
         <div class="table-container" id="tableContainer"></div>
         
     </div>
-    <div class="container-lower" id="final-container"></div>
+    <div class="container-lower" id="final-container">
+        
+    </div>
 
-
+   
+<!-- Modal structure -->
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Table to display settings -->
+                <table class="table table-bordered" id="settingsTable">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Description</th>
+                            <th>Set Time (Min)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- This will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">Apply changes</button>
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Offcanvas structure -->
 
 
