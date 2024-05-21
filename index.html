@@ -14,9 +14,19 @@
 </head>
 
 <body>
-    <header class="header">
+    <!-- <header class="header">
 
-    </header>
+    </header> -->
+    <!-- <nav class="navbar "> 
+        <ul class="navlist">
+            <div class="logo"> <img src="pipe1" alt="pipeimage"></div>
+            <li><a href="#home"></a>Home</li>
+            <li><a href="#about"></a>About</li>
+            <li><a href="#login"></a>Log in</li>
+            <li><a href="#contact"></a>Contact us</li>
+        </ul>
+
+    </nav> -->
 
     <div class="container">
         <form id="pipingForm">
@@ -55,44 +65,45 @@
                         <td></td>
                     </tr>
                 </tfoot>
+
+                
             </table>
+            <div class="dropdown-container">
+                <!-- <h3 style="text-align: center; font-weight: bold; white-space: nowrap;">Modelling Confirmations</h3> -->
+                <label> LOD of Modelling</label>
+                <select>
+                    <option>LOD 300</option>
+                    <option>LOD 200</option>
+                    <option>LOD 100</option>
+                </select>
+                <label> Pipe Support</label>
+                <select>
+                    <option>Primary</option>
+                    <option>Out of Scope</option>
+                </select>
+                <label>  Specification Sheet</label>
+                <select>
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+            <div class="button-container">
+                <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button> 
+                <button type="button" class="btn btn-primary" onclick="openSettingsModal()">Set Default Time</button>
+                <button type="button" class="btn btn-save" onclick="saveRow(this); scrollToTableContainer()">Save Project Data</button>
+
+                </div>
            
         </form>
         
      
     </div>
-    <div class="dropdown-container">
-        <h3 style="text-align: center; font-weight: bold; white-space: nowrap;">Modelling Confirmations</h3>
-        <label> LOD of Modelling</label>
-        <select>
-            <option>LOD 300</option>
-            <option>LOD 200</option>
-            <option>LOD 100</option>
-        </select>
-        <label> Pipe Support</label>
-        <select>
-            <option>Primary</option>
-            <option>Out of Scope</option>
-        </select>
-        <label>  Specification Sheet</label>
-        <select>
-            <option>No</option>
-            <option>Yes</option>
-        </select>
-    </div>
+    
     <div id="componentTableOutput" class="table-output">
 
 
     </div> <!-- Container for the generated table -->
-    <div class="button-container">
-        <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button> 
-        <button type="button" class="btn btn-primary" onclick="openSettingsModal()">Open Settings</button>
-        <button type="button" class="btn btn-save" onclick="saveRow(this)">Save Project Data</button>
-     
-        <button type="button" class="btn btn-calculate" onclick="calculateTotalHours(); scrollToFinalContainer()">Calculate Total Hours </button>
-        <button type="button" class="btn btn-select" onclick="showSelectedCells()">Update Selection</button>
-        <button class="btn btn-estimate" type="button" onclick="generateEstimate()">Generate Estimation</button>
-    </div>
+    
     <div class="container-middle">
         <!-- <div class="dropdown-container" id="dropdownContainer"></div> -->
         <div class="table-container" id="tableContainer"></div>
