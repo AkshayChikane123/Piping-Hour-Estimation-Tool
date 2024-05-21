@@ -306,6 +306,15 @@ function selectionFactors() {
         tableContainer.innerHTML = "";
         // Append the component table to the table container
         tableContainer.appendChild(componentTable);
+
+        // Create and append buttons
+        const buttonContainer = document.createElement('div');
+        buttonContainer.innerHTML = `
+            <button type="button" class="btn btn-calculate" onclick="calculateTotalHours(); scrollToFinalContainer()">Calculate Total Hours</button>
+            <button type="button" class="btn btn-select" onclick="showSelectedCells()">Update Selection</button>
+            <button class="btn btn-estimate" type="button" onclick="generateEstimate()">Generate Estimation</button>
+        `;
+        tableContainer.appendChild(buttonContainer);
     }
 }
 
@@ -492,15 +501,17 @@ function generateComponentTable(calculatedSiteData) {
 
   // Append subtotal cells to the subtotal row
 for (const siteName in subtotalCells) {
-    subtotalRow.appendChild(subtotalCells[siteName].count); // Count cell
+    subtotalRow.appendChild(subtotalCells[siteName].count ); // Count cell
 
     // Cell for displaying "Subtotal" text in the Default Time column
     const subtotalDefaultTimeCell = document.createElement("td");
     subtotalDefaultTimeCell.textContent = "Subtotal";
     subtotalRow.appendChild(subtotalDefaultTimeCell);
 
-    subtotalRow.appendChild(subtotalCells[siteName].hours); // Hours cell
-}
+    subtotalRow.appendChild(subtotalCells[siteName].hours ); // Hours cell
+    }
+    
+    
 
 
     table.appendChild(subtotalRow); // Add the subtotal row to the table
@@ -511,7 +522,53 @@ for (const siteName in subtotalCells) {
     return table; // Return the generated table
 }
 
-function updateSelection() {
+function showSelectedCells() {
+    const tableContainer = document.getElementById("tableContainer");
+
+    if (!tableContainer) {
+        console.error('Table container not found');
+        return;
+    }
+
+    // Clear any existing content in the table container
+    tableContainer.innerHTML = "";
+
+    // Retrieve current table rows
+    const tableBody = document.getElementById("inputRows");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+    // Prepare updated data structure to store checkbox states
+    const updatedSiteData = {};
+
+    // Iterate over each row to capture checkbox states
+    rows.forEach((row) => {
+        const siteName = row.querySelector('input[name="siteName"]').value.trim();
+
+        if (!siteName) {
+            console.warn("Skipping a row with no site name");
+            return; // Skip rows with missing site names
+        }
+
+        const checkboxChecked = row.querySelector('input[type="checkbox"]').checked;
+
+        // Store checkbox state in updated data structure
+        updatedSiteData[siteName] = {
+            isChecked: checkboxChecked,
+            // Add other necessary data properties if needed
+        };
+    });
+
+    // Generate the component table with updated data including checkbox states
+    const componentTable = generateComponentTable(updatedSiteData);
+
+    // Append the component table to the table container
+    tableContainer.appendChild(componentTable);
+}
+
+
+
+
+function overallEffortTable() {
     let table = document.querySelector('.styled-table');
     let siteData = {}; // Object to store site data
 
@@ -562,7 +619,7 @@ function updateSelection() {
 }
 
 function calculateTotalHours() {
-    const newObject = updateSelection();
+    const newObject = overallEffortTable();
     console.log(newObject, 'newOBJECT');
 
     let siteSums = {};
@@ -653,38 +710,39 @@ function calculateTotalHours() {
 
     // Add the subtotal row
     tableHTML += `
-        <tr>
-            <td colspan="2">Subtotal</td>
-            <td>${overallSums.pipingSum.toFixed(2)} hr</td>
-            <td>${overallSums.equipmentModellingSum.toFixed(2)} hr</td>
-            <td>${overallSums.adminSetupProposalSum.toFixed(2)} hr</td>
-            <td>${overallSums.deliverablesSum.toFixed(2)} hr</td>
-            <td>${overallSums.totalEfforts.toFixed(2)} hr</td>
-        </tr>
-        <tr>
-        <td colspan="2">Hours / Line</td>
-        <td>${hoursPerLinePiping.toFixed(2)} hr</td>
-        <td>${hoursPerLineEditModelling.toFixed(2)} hr</td>
-        <td>${hoursPerLineAdmin.toFixed(2)} hr</td>
-        <td>${hoursPerLineDeliverables.toFixed(2)} hr</td>
-        <td>${totalEffortsPerLine.toFixed(2)} hr</td>
-    </tr>
-    <tr>
-        <td colspan="2">Lines / day</td>
-        <td>${(8 / hoursPerLinePiping).toFixed(2)} Lines</td>
-            <td>${(8 / hoursPerLineEditModelling).toFixed(2)} Lines</td>
-            <td>${(8 / hoursPerLineAdmin).toFixed(2)} Lines</td>
-            <td>${(8 / hoursPerLineDeliverables).toFixed(2)} Lines</td>
-            <td>${(8 / totalEffortsPerLine).toFixed(2)} Lines</td>
-    </tr>
-    <tr>
-        <td colspan="2">Days Required</td>
-        <td>${overallSums.pipingSum.toFixed(2)/8} Days</td>
-            <td>${overallSums.equipmentModellingSum.toFixed(2)/8} Days</td>
-            <td>${overallSums.adminSetupProposalSum.toFixed(2)/8} Days</td>
-            <td>${overallSums.deliverablesSum.toFixed(2)/8} Days</td>
-            <td>${overallSums.totalEfforts.toFixed(2)/8} Days</td>
-    </tr>
+                <tr>
+                <td colspan="2">Subtotal</td>
+                <td>${overallSums.pipingSum.toFixed(2)} hr</td>
+                <td>${overallSums.equipmentModellingSum.toFixed(2)} hr</td>
+                <td>${overallSums.adminSetupProposalSum.toFixed(2)} hr</td>
+                <td>${overallSums.deliverablesSum.toFixed(2)} hr</td>
+                <td>${overallSums.totalEfforts.toFixed(2)} hr</td>
+            </tr>
+            <tr>
+                <td colspan="2">Hours / Line</td>
+                <td>${hoursPerLinePiping.toFixed(2)} hr</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${totalEffortsPerLine.toFixed(2)} hr</td>
+            </tr>
+            <tr>
+                <td colspan="2">Lines / day</td>
+                <td>${(8 / hoursPerLinePiping).toFixed(2)} Lines</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${(8 / totalEffortsPerLine).toFixed(2)} Lines</td>
+            </tr>
+            <tr>
+                <td colspan="2">Days Required</td>
+                <td>${(overallSums.pipingSum / 8).toFixed(1)} Days</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${(overallSums.totalEfforts / 8).toFixed(1)} Days</td>
+            </tr>
+
           
         `;
 
@@ -698,12 +756,24 @@ function calculateTotalHours() {
 
 
 
+
+
+function scrollToTableContainer() {
+    const tableContainer = document.getElementById("tableContainer");
+    if (tableContainer) {
+        tableContainer.scrollIntoView({ behavior: "smooth" });
+    }
+}
+
 function scrollToFinalContainer() {
     const finalContainer = document.getElementById("final-container");
     if (finalContainer) {
         finalContainer.scrollIntoView({ behavior: "smooth" });
     }
 }
+
+
+
 
 function generateEstimate() {
     // Get the offcanvas content area
@@ -784,7 +854,6 @@ function generateEstimate() {
     offcanvas.show();
 }
 
-
 function submitForm() {
     // Get the offcanvas form by ID
     const form = document.getElementById("salesForm");
@@ -835,7 +904,6 @@ function submitForm() {
         offcanvas.hide();
     }
 }
-
 function salesQuote() {
     console.log("Sales quote function executed.");
     // Additional processing logic can go here
