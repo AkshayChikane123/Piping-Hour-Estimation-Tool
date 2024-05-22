@@ -23,7 +23,47 @@ function addRow() {
     defaultValues(newRow.querySelector('input[name="lineCounts[]"]')); // Initialize default values for the first input
     updateSubtotalInput(); // Update subtotal immediately after adding the row
 }
+// Function to delete a row
+function deleteRow(button) {
+    const row = button.parentNode.parentNode;
+    const tableBody = document.getElementById("inputRows");
+    tableBody.removeChild(row);
 
+    // Recalculate row numbers to maintain order
+    Array.from(tableBody.children).forEach((row, index) => {
+        row.children[0].textContent = index + 1; // Update the row numbers
+    });
+}
+// Add a default row when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    addRow(); // Add a blank row on page load
+});
+
+// Function to calculate and set default values based on "Total Line Counts"
+function defaultValues(input) {
+    const row = input.parentNode.parentNode; // Get the parent row
+    const lineCounts = parseInt(input.value, 10); // Get the value of "Total Line Counts"
+
+    if (isNaN(lineCounts) || lineCounts < 1) {
+        return; // If not a valid number or less than 1, do nothing
+    }
+
+    // Calculate derived values based on the given logic
+    const totalExpectedPID = Math.ceil(lineCounts / 2);
+    const sumBendsTeesReducers = lineCounts * 6;
+    const totalEquipments = Math.ceil(lineCounts * 0.4);
+    const totalValves = lineCounts * 3;
+    const totalLineSegments = lineCounts + (lineCounts * 6) + (lineCounts * 3);
+    const pipeSupport = lineCounts * 5;
+
+    // Update the corresponding fields in the same row
+    row.querySelector('input[name="totalExpectedPID"]').value = totalExpectedPID;
+    row.querySelector('input[name="sumBendsTeesReducers"]').value = sumBendsTeesReducers;
+    row.querySelector('input[name="totalEquipments"]').value = totalEquipments;
+    row.querySelector('input[name="totalValves"]').value = totalValves;
+    row.querySelector('input[name="totalLineSegments"]').value = totalLineSegments;
+    row.querySelector('input[name="pipeSupport"]').value = pipeSupport;
+}
 // Function to update the subtotal row
 function updateSubtotalInput() {
     const tableBody = document.getElementById("inputRows");
@@ -55,18 +95,68 @@ function updateSubtotalInput() {
     document.getElementById("subtotalLineSegments").textContent = subtotalLineSegments;
     document.getElementById("subtotalPipeSupport").textContent = subtotalPipeSupport;
 }
-// Function to delete a row
-function deleteRow(button) {
-    const row = button.parentNode.parentNode;
-    const tableBody = document.getElementById("inputRows");
-    tableBody.removeChild(row);
 
-    // Recalculate row numbers to maintain order
-    Array.from(tableBody.children).forEach((row, index) => {
-        row.children[0].textContent = index + 1; // Update the row numbers
+document.addEventListener('DOMContentLoaded', function() {
+    const specSheetDropdown = document.getElementById('specSheetDropdown');
+    const pipeSupportDropdown = document.getElementById('pipeSupportDropdown');
+    const lodDropdown = document.getElementById('lodDropdown');
+    const inputContainer = document.getElementById('inputContainer');
+    let pmsInputValue = 0; // Initialize variable to store PMS input value
+    let isPipeSupportOutOfScope = false; // Initialize variable to store Pipe Support state
+    let selectedLOD = 'LOD 300'; // Initialize variable to store selected LOD
+
+    specSheetDropdown.addEventListener('change', function() {
+        // Clear any existing input field
+        inputContainer.innerHTML = '';
+
+        if (specSheetDropdown.value === 'Yes') {
+            // Create a new label and input field
+            const label = document.createElement('label');
+            label.textContent = 'Enter No of PMS';
+
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = 0; // Ensure the number is non-negative
+            input.placeholder = 'Number of PMS';
+            input.addEventListener('input', function() {
+                pmsInputValue = parseInt(input.value, 10) || 0; // Capture the input value
+            });
+
+            // Append the label and input to the container
+            inputContainer.appendChild(label);
+            inputContainer.appendChild(input);
+        } else {
+            pmsInputValue = 0; // Reset PMS input value if "No" is selected
+        }
     });
-}
 
+    pipeSupportDropdown.addEventListener('change', function() {
+        if (pipeSupportDropdown.value === 'Out of Scope') {
+            isPipeSupportOutOfScope = true;
+        } else {
+            isPipeSupportOutOfScope = false;
+        }
+    });
+
+    lodDropdown.addEventListener('change', function() {
+        selectedLOD = lodDropdown.value;
+    });
+
+    // Store the PMS input value in a global variable for access in selectionFactors
+    window.getPmsInputValue = function() {
+        return pmsInputValue;
+    };
+
+    // Store the Pipe Support state in a global variable for access in selectionFactors
+    window.getPipeSupportState = function() {
+        return isPipeSupportOutOfScope;
+    };
+
+    // Store the selected LOD in a global variable for access in selectionFactors
+    window.getSelectedLOD = function() {
+        return selectedLOD;
+    };
+});
 
 // Define defaultTimes globally or in a scope accessible by both setDefaultTime() and openSettingsModal()
 let defaultTimes = {
@@ -89,6 +179,26 @@ let defaultTimes = {
     "Nozzle Orientations": 10,
 };
 
+
+
+// // Function to save settings for default and update defaultTimes object
+function saveSettings() {
+    const inputs = document.querySelectorAll("#settingsTable tbody input");
+    // event.stopPropagation();
+    inputs.forEach(input => {
+        const description = input.dataset.description;
+        const newValue = parseInt(input.value, 10);
+        if (!isNaN(newValue)) {
+            defaultTimes[description] = newValue;
+        }
+    });
+
+    console.log("Updated defaultTimes:", defaultTimes);
+
+    // Optionally, provide feedback or notifications
+    alert("Settings saved successfully!");
+    
+}
 // Function to open settings modal and populate the table
 function openSettingsModal() {
     const settingsTableBody = document.querySelector("#settingsTable tbody");
@@ -124,66 +234,7 @@ function openSettingsModal() {
     settingsModal.show();
 }
 
-// // Add event listener to save settings button inside settings modal
-// document.querySelector("#settingsModal .modal-footer .btn-primary").addEventListener("click", saveSettings);
-// // Function to save settings and update defaultTimes object
-function saveSettings() {
-    const inputs = document.querySelectorAll("#settingsTable tbody input");
-    // event.stopPropagation();
-    inputs.forEach(input => {
-        const description = input.dataset.description;
-        const newValue = parseInt(input.value, 10);
-        if (!isNaN(newValue)) {
-            defaultTimes[description] = newValue;
-        }
-    });
 
-    console.log("Updated defaultTimes:", defaultTimes);
-
-    // Optionally, update any UI elements or notifications to indicate settings were saved
-    // For example, you can display a notification using Bootstrap's alert
-
- 
-
-    // Optional: Trigger any recalculation functions if needed
-    // For example:
-    // selectionFactors();
-    // generateComponentTable(calculatedSiteData); // Assuming calculatedSiteData is accessible
-
-    // Optionally, provide feedback or notifications
-    alert("Settings saved successfully!");
-    
-}
-// Close the modal programmatically
-const settingsModal = new bootstrap.Modal(document.getElementById("settingsModal"));
-settingsModal.hide();
-
-
-// Function to calculate and set default values based on "Total Line Counts"
-function defaultValues(input) {
-    const row = input.parentNode.parentNode; // Get the parent row
-    const lineCounts = parseInt(input.value, 10); // Get the value of "Total Line Counts"
-
-    if (isNaN(lineCounts) || lineCounts < 1) {
-        return; // If not a valid number or less than 1, do nothing
-    }
-
-    // Calculate derived values based on the given logic
-    const totalExpectedPID = Math.ceil(lineCounts / 2);
-    const sumBendsTeesReducers = lineCounts * 6;
-    const totalEquipments = Math.ceil(lineCounts * 0.4);
-    const totalValves = lineCounts * 3;
-    const totalLineSegments = lineCounts + (lineCounts * 6) + (lineCounts * 3);
-    const pipeSupport = lineCounts * 5;
-
-    // Update the corresponding fields in the same row
-    row.querySelector('input[name="totalExpectedPID"]').value = totalExpectedPID;
-    row.querySelector('input[name="sumBendsTeesReducers"]').value = sumBendsTeesReducers;
-    row.querySelector('input[name="totalEquipments"]').value = totalEquipments;
-    row.querySelector('input[name="totalValves"]').value = totalValves;
-    row.querySelector('input[name="totalLineSegments"]').value = totalLineSegments;
-    row.querySelector('input[name="pipeSupport"]').value = pipeSupport;
-}
 
 // Function to save the entire project's data with validation
 function saveRow() {
@@ -235,16 +286,21 @@ function saveRow() {
     selectionFactors(); 
 }
 
-// Add a default row when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-    addRow(); // Add a blank row on page load
-});
-
 function selectionFactors() {
     const calculatedSiteData = {}; // Store calculated data for each site
 
     const tableBody = document.getElementById("inputRows");
     const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+     // Get the PMS input value
+     const pmsInputValue = window.getPmsInputValue();
+
+    
+    // Get the Pipe Support state
+    const isPipeSupportOutOfScope = window.getPipeSupportState();
+
+    // Get the selected LOD
+    const selectedLOD = window.getSelectedLOD();
 
     // Calculate the component data for each site
     rows.forEach((row) => {
@@ -261,14 +317,15 @@ function selectionFactors() {
         const lineSegments = parseInt(row.querySelector('input[name="totalLineSegments"]').value, 10);
         const pipeSupport = parseInt(row.querySelector('input[name="pipeSupport"]').value, 10);
 
+
         const calculatedData = {
             "Efforts for Volume Creation": bendsTeesReducer + totalEquipments + lineSegments,
             "Efforts for Centreline Creation": lineSegments,
             "Creation of Line List": lineSegments,
             "Efforts for 3D Markups": lineSegments,
             "Efforts for 3D Modelling": lineSegments + bendsTeesReducer,
-            "Pipe Supports": pipeSupport,
-            "No of PMS (Spec Sheet)": lineCounts,
+            "Pipe Supports": isPipeSupportOutOfScope ? 0 : pipeSupport, // Use 0 if out of scope
+            "No of PMS (Spec Sheet)": pmsInputValue, // Use the PMS input value here
             "Efforts for Equipment Development": totalEquipments,
             "Admin Setup & Proposal": 60,
             "Plot Plan": lineCounts,
@@ -283,8 +340,23 @@ function selectionFactors() {
 
         const estimatedTimes = {};
         for (const [component, value] of Object.entries(calculatedData)) {
-            const defaultTime = defaultTimes[component];
+            let defaultTime = defaultTimes[component];
             if (defaultTime) {
+                // Apply LOD multiplier only to the time calculation of "Efforts for Equipment Development"
+                if (component === "Efforts for Equipment Development") {
+                    switch (selectedLOD) {
+                        case 'LOD 200':
+                            defaultTime *= 0.8;
+                            break;
+                        case 'LOD 100':
+                            defaultTime *= 0.5;
+                            break;
+                        case 'LOD 300':
+                        default:
+                            defaultTime *= 1;
+                            break;
+                    }
+                }
                 estimatedTimes[component] = defaultTime;
             }
         }
@@ -522,52 +594,6 @@ for (const siteName in subtotalCells) {
     return table; // Return the generated table
 }
 
-function showSelectedCells() {
-    const tableContainer = document.getElementById("tableContainer");
-
-    if (!tableContainer) {
-        console.error('Table container not found');
-        return;
-    }
-
-    // Clear any existing content in the table container
-    tableContainer.innerHTML = "";
-
-    // Retrieve current table rows
-    const tableBody = document.getElementById("inputRows");
-    const rows = Array.from(tableBody.querySelectorAll("tr"));
-
-    // Prepare updated data structure to store checkbox states
-    const updatedSiteData = {};
-
-    // Iterate over each row to capture checkbox states
-    rows.forEach((row) => {
-        const siteName = row.querySelector('input[name="siteName"]').value.trim();
-
-        if (!siteName) {
-            console.warn("Skipping a row with no site name");
-            return; // Skip rows with missing site names
-        }
-
-        const checkboxChecked = row.querySelector('input[type="checkbox"]').checked;
-
-        // Store checkbox state in updated data structure
-        updatedSiteData[siteName] = {
-            isChecked: checkboxChecked,
-            // Add other necessary data properties if needed
-        };
-    });
-
-    // Generate the component table with updated data including checkbox states
-    const componentTable = generateComponentTable(updatedSiteData);
-
-    // Append the component table to the table container
-    tableContainer.appendChild(componentTable);
-}
-
-
-
-
 function overallEffortTable() {
     let table = document.querySelector('.styled-table');
     let siteData = {}; // Object to store site data
@@ -756,6 +782,49 @@ function calculateTotalHours() {
 
 
 
+function showSelectedCells() {
+    const tableContainer = document.getElementById("tableContainer");
+
+    if (!tableContainer) {
+        console.error('Table container not found');
+        return;
+    }
+
+    // Clear any existing content in the table container
+    tableContainer.innerHTML = "";
+
+    // Retrieve current table rows
+    const tableBody = document.getElementById("inputRows");
+    const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+    // Prepare updated data structure to store checkbox states
+    const updatedSiteData = {};
+
+    // Iterate over each row to capture checkbox states
+    rows.forEach((row) => {
+        const siteName = row.querySelector('input[name="siteName"]').value.trim();
+
+        if (!siteName) {
+            console.warn("Skipping a row with no site name");
+            return; // Skip rows with missing site names
+        }
+
+        const checkboxChecked = row.querySelector('input[type="checkbox"]').checked;
+
+        // Store checkbox state in updated data structure
+        updatedSiteData[siteName] = {
+            isChecked: checkboxChecked,
+            // Add other necessary data properties if needed
+        };
+    });
+
+    // Generate the component table with updated data including checkbox states
+    const componentTable = generateComponentTable(updatedSiteData);
+
+    // Append the component table to the table container
+    tableContainer.appendChild(componentTable);
+}
+
 
 
 function scrollToTableContainer() {
@@ -771,7 +840,6 @@ function scrollToFinalContainer() {
         finalContainer.scrollIntoView({ behavior: "smooth" });
     }
 }
-
 
 
 
@@ -904,6 +972,7 @@ function submitForm() {
         offcanvas.hide();
     }
 }
+
 function salesQuote() {
     console.log("Sales quote function executed.");
     // Additional processing logic can go here
