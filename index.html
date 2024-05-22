@@ -71,26 +71,28 @@
             <div class="dropdown-container">
                 <!-- <h3 style="text-align: center; font-weight: bold; white-space: nowrap;">Modelling Confirmations</h3> -->
                 <label> LOD of Modelling</label>
-                <select>
+                <select id="lodDropdown">
                     <option>LOD 300</option>
                     <option>LOD 200</option>
                     <option>LOD 100</option>
                 </select>
                 <label> Pipe Support</label>
-                <select>
+                <select id="pipeSupportDropdown">
                     <option>Primary</option>
                     <option>Out of Scope</option>
                 </select>
                 <label>  Specification Sheet</label>
-                <select>
+                <select id="specSheetDropdown">
                     <option>No</option>
                     <option>Yes</option>
                 </select>
             </div>
+            <div id="inputContainer"></div>
+
             <div class="button-container">
                 <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button> 
-                <button type="button" class="btn btn-primary" onclick="openSettingsModal()">Set Default Time</button>
                 <button type="button" class="btn btn-save" onclick="saveRow(this); scrollToTableContainer()">Save Project Data</button>
+                <button type="button" class="btn btn-default-time" onclick="openSettingsModal()">Set Default Time</button>
 
                 </div>
            
@@ -99,9 +101,6 @@
      
     </div>
     
-    <div id="componentTableOutput" class="table-output">
-
-
     </div> <!-- Container for the generated table -->
     
     <div class="container-middle">
