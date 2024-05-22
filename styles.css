@@ -3,6 +3,9 @@ body {
     padding: 0;
     background-color: #e3edf7;
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center contents horizontally */
 }
 
 
@@ -17,7 +20,7 @@ body {
     text-align: center;
 }
 #pipingForm{
-    margin-top: 100px;
+    margin:10px;
 }
 .container {
     display: flex;
@@ -25,14 +28,17 @@ body {
     align-items: center;
     width: 100%;
     margin: auto;
+    margin-top: 100px;
+    margin-bottom: 20px;
     padding: 20px;
-    height: 42vh;
+  
+    overflow-y: visible;
 }
 
 #headingTable{
     /* margin-top: 50px; */
     table-layout: auto;
-    cursor: pointer;
+    margin: 20px;
 }
 
 
@@ -65,20 +71,47 @@ body {
     border: 1px solid #ccc;
 }
 
+#inputContainer{
+    display: flex;
+    /* margin-right: 14.5%; */
+    padding: 10px;
+    margin-left: 22px;
+    align-items: center;
+    justify-content:start;
+}
+
+#inputContainer label{
+    font-weight: 600;
+    margin-left: 0%  
+}
+
+#inputContainer input{
+    margin:20px;
+    padding: 2px;
+    border-radius: 5px;
+    width: 15%;    
+    align-items: end;
+    
+}
+
 .table-container {
+    margin: 10px;
+    padding: 10px;
     width: auto; 
     text-align: center;
     overflow-x: auto;
     table-layout: auto;
-    cursor: pointer;
 
 }
 
 .button-container {
-        display: flex;
-        padding:10px;
-        justify-content: start;
-        gap: 10px;
+    align-items: center;
+    position: relative;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
 }
 
 .btn {
@@ -88,10 +121,10 @@ body {
     cursor: pointer;
     display: inline;
 }
-/* 
+
 .btn:hover{
     color: #9daf4c;
-} */
+}
 
 .btn-primary,
 .btn-save,
@@ -99,6 +132,11 @@ body {
 .btn-calculate {
     background-color: #4CAF50;
     color: white;
+}
+
+.btn-default-time{
+  background-color:#f0ad4e ;
+    
 }
 
 .btn-estimate {
@@ -144,75 +182,51 @@ input[type="number"] {
     /* Add padding for better visual spacing */
 }
 
-#componentTableOutput {
-    margin-top: 20px;
-    padding: 10px;
-    /* background: #f9f9f9; */
-    /* Background for the output area */
-}
-
 table {
     table-layout: auto;
-    
-    /* Default layout for variable widths */
     border-collapse: collapse;
+   
 }
 
 .styled-table {
     border: 1px solid #000;
-
-    /* width: 75%; */
     margin: 20px auto;
     padding: 20px;
     border-radius: 25px;
     box-sizing: border-box;
-    /* background-color: #fff; */
-    flex-grow: 1;
     overflow-y: auto;
 }
 
-
-.flex-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    /* Adjust the spacing between the component table and the dropdown container */
-}
-
-
 .container-middle {
+    position:relative;
+    margin:10px;
     width: auto;
     display: flex;
     justify-content: center;
-    margin: auto;
+    align-items: center;
     /* gap: 50px; */
     /* background-color: #e73838; */
     /* 75% of the available width */
 }
 
-
-
 .checkbox-input {
     transform: scale(1.8); /* Increase the size of the checkbox */
 }
 
-
-
-
-
-
 /* Container styles */
 .container-lower {
-    width: 100%;
-    margin-top: 50px;
-    padding: 50px;
+    width: auto;
+    margin: 20px;
+    padding: 10px;
     display: flex;
     justify-content: center;
-    margin: auto;
-    height: 50px;
-    margin-bottom: 400px;
+    margin-bottom: 100px;
     /* background-color: #a09797; */
     
+}
+.container-lower table {
+    table-layout: auto;
+    margin: 10px;
 }
 
 .container-lower table tr{
