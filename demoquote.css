@@ -1,1 +1,121 @@
 
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3edf7;
+    
+}
+
+.a4-container {
+    width: 250mm;
+    min-height: 300mm;
+    padding: 20mm;
+    /* box-sizing: border-box; */
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    outline-style: auto;
+    outline-offset: -1cm;
+    /* outline-width: mm; */
+
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* background-color: aqua; */
+    padding: 10px;
+    /* outline-style: auto; */
+    border-bottom: 2px;
+}
+
+.first, .second {
+    width: 45%;
+    height: 200px;
+    /* background-color: bisque; */
+    padding: 10px;
+    
+}
+
+.mainbody {
+    /* background-color: aquamarine; */
+    padding: 10px;
+    /* margin-top: 10px; */
+    /* outline-style: auto; */
+}
+
+.salesquoteHead {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    /* background-color: bisque; */
+  
+}
+
+.salesquoteid {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.quoteTable {
+    /* background-color: bisque; */
+    padding: 10px;
+    margin-top: 10px;
+    
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #a09797;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(228, 202, 99);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+
+.footer {
+    /* background-color: rgb(248, 248, 143); */
+    padding: 10px;
+    margin-top: 10px;
+    /* outline-style: auto; */
+}
+
+.terms-condition {
+    /* background-color: bisque; */
+    padding: 10px;
+}
+
+@media print {
+    body {
+        margin: 0;
+    }
+
+    .a4-container {
+        width: 250mm;
+        min-height: 300mm;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .header, .mainbody, .footer {
+        page-break-inside: avoid;
+    }
+}
