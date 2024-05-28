@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
     <!-- <header class="header">
 
     </header> -->
@@ -27,7 +28,6 @@
         </ul>
 
     </nav> -->
-
     <div class="container">
         <form id="pipingForm">
             <h2 id="table-heading1"> Project Hours Estimation Tool </h2>
@@ -66,7 +66,7 @@
                     </tr>
                 </tfoot>
 
-                
+
             </table>
             <div class="dropdown-container">
                 <!-- <h3 style="text-align: center; font-weight: bold; white-space: nowrap;">Modelling Confirmations</h3> -->
@@ -81,7 +81,7 @@
                     <option>Primary</option>
                     <option>Out of Scope</option>
                 </select>
-                <label>  Specification Sheet</label>
+                <label> Specification Sheet</label>
                 <select id="specSheetDropdown">
                     <option>No</option>
                     <option>Yes</option>
@@ -90,63 +90,65 @@
             <div id="inputContainer"></div>
 
             <div class="button-container">
-                <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button> 
-                <button type="button" class="btn btn-save" onclick="saveRow(this); scrollToTableContainer()">Save Project Data</button>
-                <button type="button" class="btn btn-default-time" onclick="openSettingsModal()">Set Default Time</button>
+                <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button>
+                <button type="button" class="btn btn-save" onclick="saveRow(this); scrollToTableContainer()">Save
+                    Project Data</button>
+                <button type="button" class="btn btn-default-time" onclick="openSettingsModal()">Set Default
+                    Time</button>
 
-                </div>
-           
+            </div>
+
         </form>
-        
-     
+
+
     </div>
-    
+
     </div> <!-- Container for the generated table -->
-    
+
     <div class="container-middle">
         <!-- <div class="dropdown-container" id="dropdownContainer"></div> -->
         <div class="table-container" id="tableContainer"></div>
-        
+
     </div>
     <div class="container-lower" id="final-container">
-        
+
     </div>
 
-   
-<!-- Modal structure -->
-<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Table to display settings -->
-                <table class="table table-bordered" id="settingsTable">
-                    <thead>
-                        <tr>
-                            <th>Sr No</th>
-                            <th>Description</th>
-                            <th>Set Time (Min)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- This will be populated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="saveSettings()">Apply changes</button>
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+
+    <!-- Modal structure -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Table to display settings -->
+                    <table class="table table-bordered" id="settingsTable">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Description</th>
+                                <th>Set Time (Min)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- This will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">Apply changes</button>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+
     <!-- Offcanvas structure -->
-
-
-
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
         style="width: 30%;">
         <div class="offcanvas-header">
@@ -157,9 +159,6 @@
             <!-- This will be populated by generateEstimate() -->
         </div>
     </div>
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
