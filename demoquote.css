@@ -1,75 +1,65 @@
 
-body {
+
+
+ body {
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #e3edf7;
-    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px; 
 }
 
 .a4-container {
-    width: 250mm;
-    min-height: 300mm;
-    padding: 20mm;
-    /* box-sizing: border-box; */
+    width: 210mm; 
+    min-height: 297mm; 
+    padding: 10mm;
     background: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
-    outline-style: auto;
-    outline-offset: -1cm;
-    /* outline-width: mm; */
-
 }
-
-
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    /* background-color: aqua; */
+    align-items: center;
     padding: 10px;
-    /* outline-style: auto; */
-    border-bottom: 2px;
+    line-height: 1.5;
+    border-bottom: 2px solid #a09797;
+    font-weight: bold;
 }
 
-.first, .second {
+.first {
     width: 45%;
-    height: 200px;
-    /* background-color: bisque; */
     padding: 10px;
-    
+}
+
+.second {
+    width: 45%;
+    padding: 10px;
 }
 
 .mainbody {
-    /* background-color: aquamarine; */
     padding: 10px;
-    /* margin-top: 10px; */
-    /* outline-style: auto; */
 }
 
 .salesquoteHead {
     display: flex;
     justify-content: center;
     align-items: center;
-   
-    /* background-color: bisque; */
-  
 }
 
 .salesquoteid {
     height: 100px;
     display: flex;
     justify-content: space-between;
-    
+    align-items: center;
 }
 
 .quoteTable {
-    /* background-color: bisque; */
     padding: 10px;
     margin-top: 10px;
-    
 }
 
 th, td {
@@ -80,36 +70,33 @@ th, td {
 
 th {
     background-color: rgb(228, 202, 99);
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    
+    /* flex-shrink: inherit; */
+   /* border-radius: 600px; */
 }
 
 .footer {
-    /* background-color: rgb(248, 248, 143); */
     padding: 10px;
     margin-top: 10px;
-    /* outline-style: auto; */
+    line-height: 1.5;
 }
 
 .terms-condition {
-    /* background-color: bisque; */
     padding: 10px;
 }
 
 @media print {
     body {
         margin: 0;
+        font-size: 12px; 
     }
 
     .a4-container {
-        width: 250mm;
-        min-height: 300mm;
         padding: 0;
         margin: 0;
         box-shadow: none;
@@ -118,4 +105,4 @@ table {
     .header, .mainbody, .footer {
         page-break-inside: avoid;
     }
-}
+} 

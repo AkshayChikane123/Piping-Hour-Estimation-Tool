@@ -1,21 +1,29 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #e3edf7;
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Center contents horizontally */
-}
-
-
-.background {
-    background: rgba(0, 00, 0, 0.7) url('pipe1.jpg');
     background-size: cover;
-    background-blend-mode: darken;
-    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1; 
+    /* Adjust the opacity to make the background image fainter */
 }
+
+.container,
+.container-middle,
+.container-lower {
+    /* background-color: #f0f0f0; */
+     /* Professional background color */
+    background-color: #f0f0f0;
+    margin-top: 20px; /* Adjust margin top as needed */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 50px; /* Apply border-radius for rounded corners */
+  
+}
+
 
 #table-heading1 {
 
@@ -35,15 +43,20 @@ body {
     margin-top: 100px;
     margin-bottom: 20px;
     padding: 20px;
-
     overflow-y: visible;
+    
+   
 }
 
 #headingTable {
     /* margin-top: 50px; */
     table-layout: auto;
     margin: 20px;
+   
 }
+
+
+
 
 
 .dropdown-container {
@@ -82,6 +95,7 @@ body {
     margin-left: 22px;
     align-items: center;
     justify-content: start;
+    
 }
 
 #inputContainer label {
@@ -90,6 +104,51 @@ body {
 }
 
 #inputContainer input {
+    
+    margin: 20px;
+    padding: 2px;
+    border-radius: 5px;
+    width: 15%;
+    align-items: end;
+
+}
+
+#inputContainer button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block display */
+    font-size: 16px; /* Set font size */
+    margin: 50px 2px; /* Add margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+#inputContainer button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+#inputContainer1 {
+    display: flex;
+    /* margin-right: 14.5%; */
+    padding: 10px;
+    margin-left: 22px;
+    align-items: center;
+    justify-content: start;
+    
+}
+
+#inputContainer1 label {
+    font-weight: 600;
+    margin-left: 0%
+}
+
+#inputContainer1 input {
+    
     margin: 20px;
     padding: 2px;
     border-radius: 5px;
@@ -156,6 +215,7 @@ td {
     padding: 10px;
     border: 1px solid #a09797;
     text-align: center;
+  
 
 }
 
@@ -164,6 +224,7 @@ th {
     background-color: rgb(228, 202, 99);
     font-weight: 600;
     font-size: 1.1rem;
+    
 }
 
 /* Default Input Styling */
@@ -172,6 +233,19 @@ input[type="number"] {
     padding: 0px;
     text-align: center;
 }
+
+#hourlyRate {
+    width: 80%;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Align text to the left */
+}
+
+#hourlyRate::placeholder {
+    text-align: start; /* Align placeholder text to the left */
+}
+
+
+
 
 /* Class to highlight invalid input fields */
 .invalid-input {
@@ -188,8 +262,8 @@ input[type="number"] {
 
 table {
     table-layout: auto;
-    border-collapse: collapse;
-
+    border-collapse:collapse;
+   
 }
 
 .styled-table {
@@ -233,9 +307,13 @@ table {
 .container-lower table {
     table-layout: auto;
     margin: 10px;
+    
 }
 
 .container-lower table tr {
 
     border-collapse: collapse;
 }
+
+
+
