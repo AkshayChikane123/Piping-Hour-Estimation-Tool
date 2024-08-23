@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Quotation</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include interactive CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- jsPDF for PDF generation -->
+</head>
+
+<body>
+    <h1 class="center-text">Sales Quotation</h1> <!-- Centered Heading -->
+
+    <!-- Customer Information Section -->
+    <div class="quotation-section">
+        <h2>Customer Information</h2>
+        <div>
+            <label for="editClientName">Client Name:</label>
+            <input type="text" id="editClientName">
+        </div>
+        <div>
+            <label for="editCompanyName">Company Name:</label>
+            <input type="text" id="editCompanyName">
+        </div>
+        <div>
+            <label for="editCompanyAddress">Company Address:</label>
+            <input type="text" id="editCompanyAddress">
+        </div>
+        <div>
+            <label for="editCountry">Country:</label>
+            <input type="text" id="editCountry">
+        </div>
+        <div>
+            <label for="editState">State:</label>
+            <input type="text" id="editState">
+        </div>
+        <div>
+            <label for="editPostalCode">Postal Code:</label>
+            <input type="text" id="editPostalCode">
+        </div>
+        <div>
+            <label for="editEmail">Email:</label>
+            <input type="email" id="editEmail">
+        </div>
+        <div>
+            <label for="editPhone">Phone:</label>
+            <input type="tel" id="editPhone">
+        </div>
+    </div>
+
+    <!-- Item Table Section -->
+    <div class="quotation-section">
+        <h2>Items</h2>
+        <table class="quotation-table">
+            <thead>
+                <tr>
+                    <th>S.No.</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows for items will be dynamically populated -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Totals Section -->
+    <div class="quotation-section">
+        <h2>Totals</h2>
+        <div>
+            <label for="editSubtotal">Subtotal:</label>
+            <input type="number" id="editSubtotal" readonly>
+        </div>
+        <div>
+            <label for="editTax">Tax (9%):</label>
+            <input type="number" id="editTax" readonly>
+        </div>
+        <div>
+            <label for="editTotal">Total:</label>
+            <input type="number" id="editTotal" readonly>
+        </div>
+    </div>
+
+    <!-- Button to download the PDF -->
+    <button onclick="downloadPDF()">Download PDF</button> <!-- PDF Generation Button -->
+
+    <script>
+        // Function to populate fields from query parameters
+        function populateFields() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            document.getElementById("editClientName").value = urlParams.get("clientName");
+            document.getElementById("editCompanyName").value = urlParams.get("companyName");
+            document.getElementById("editCompanyAddress").value = urlParams.get("companyAddress");
+            document.getElementById("editCountry").value = urlParams.get("country");
+            document.getElementById("editState").value = urlParams.get("state");
+            document.getElementById("editPostalCode").value = urlParams.get("postalCode");
+            document.getElementById("editEmail").value = urlParams.get("email");
+            document.getElementById("editPhone").value = urlParams.get("phone");
+        }
+
+        // Call populateFields on page load
+        window.onload = populateFields;
+
+        // Function to download the PDF with jsPDF
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf; // Reference to jsPDF
+            const doc = new jsPDF();
+
+            // Add customer information to the PDF
+            const clientName = document.getElementById("editClientName").value;
+            const companyName = document.getElementById("editCompanyName").value;
+            const companyAddress = document.getElementById("editCompanyAddress").value;
+            const country = document.getElementById("editCountry").value;
+            const state = document.getElementById("editState").value;
+            const postalCode = document.getElementById("editPostalCode").value;
+            const email = document.getElementById("editEmail").value;
+            const phone = document.getElementById("editPhone").value;
+
+            doc.text(20, 20, `Client Name: ${clientName}`);
+            doc.text(20, 30, `Company Name: ${companyName}`);
+            doc.text(20, 40, `Company Address: ${companyAddress}`);
+            doc.text(20, 50, `Country: ${country}`);
+            doc.text(20, 60, `State: ${state}`);
+            doc.text(20, 70, `Postal Code: ${postalCode}`);
+            doc.text(20, 80, `Email: ${email}`);
+            doc.text(20, 90, `Phone: ${phone}`);
+
+            // Save the PDF
+            doc.save("sales_quotation.pdf");
+        }
+    </script>
+</body>
+
+</html>

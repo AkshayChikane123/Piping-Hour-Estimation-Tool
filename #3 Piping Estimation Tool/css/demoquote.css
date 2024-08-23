@@ -1,0 +1,206 @@
+
+
+
+ body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3edf7;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px; 
+}
+
+.a4-container {
+    /* width: 210mm; 
+    min-height: 297mm;  */
+    padding: 10mm;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    /* margin: 20px 0; */
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    /* padding: 10px; */
+    line-height: 1.5;
+    border-bottom: 2px solid #0093DD;
+    font-weight:lighter;
+}
+
+.first {
+    width: 45%;
+    padding: 10px;
+}
+
+.second {
+    width: 45%;
+    padding: 10px;
+}
+
+.mainbody {
+    padding: 10px;
+}
+
+.salesquoteHead {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 10px; */
+    /* background-color: #f8f8f8; /* Optional: background color for better visibility */
+    /* border-bottom: 1px solid #ddd;  */
+}
+
+.salesquoteHead h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin-left: 100px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px; /* Adjust size as needed */
+    color: #a09797;
+    
+    /* margin-left:50%; */
+}
+
+.salesquoteHead img {
+    height: 50px; 
+    
+    /* Adjust size as needed */
+    /* Optionally set a max-width or width */
+}
+.salesquoteid {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: lighter;
+}
+
+.quoteTable {
+    padding: 10px;
+    /* margin-top: 10px; */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #a09797;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(228, 202, 99);
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* flex-shrink: inherit; */
+   /* border-radius: 600px; */
+}
+table th:first-child, table td:first-child {
+    width: 50px; /* Adjust width based on content */
+}
+
+.footer {
+    padding: 10px;
+    /* margin-top: 10px; */
+    line-height: 1.5;
+}
+
+#siteNamesList{
+/* background-color: #0093DD; */
+}
+
+.terms-condition {
+    padding: 10px;
+}
+
+@media print {
+    body {
+        margin: 0;
+        font-size: 12px; 
+    }
+
+    .a4-container {
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .header, .mainbody, .footer {
+        page-break-inside: avoid;
+    }
+} 
+
+/* Style for the wrapper to position children elements */
+.wrapper {
+    position: relative; /* Make this the reference for absolute positioning */
+}
+
+/* Style for the Download PDF button */
+#downloadPdf {
+    position: absolute; /* Position relative to the nearest positioned ancestor (wrapper) */
+    top: 25px; /* Distance from the top of the wrapper */
+    right: -150px; /* Adjust this value to move the button to the right of the a4-container */
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding around the text */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Display as inline block */
+    font-size: 14px; /* Text size */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    z-index: 1000; /* Ensure the button is above other content */
+}
+
+#downloadPdf:hover {
+    background-color: #45a049; /* Darker green background on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#downloadPdf:active {
+    background-color: #388e3c; /* Even darker green when clicked */
+    transform: scale(0.95); /* Slightly shrink when clicked */
+}
+
+#downloadPdf:focus {
+    outline: none; /* Remove default outline */
+}
+
+
+.footer-content {
+    font-size: 12px; /* Standard text size */
+    color: #333; /* Dark gray text color for readability */
+    line-height: 1.4; /* Slightly increased line height for readability */
+}
+
+.footer-content p {
+    margin: 5px 0; /* Space between paragraphs */
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between; /* Aligns items to the edges */
+    align-items: center; /* Centers items vertically */
+}
+
+.footer-bottom .page-info {
+    color: #333; /* Dark gray for page info */
+}
+
+.footer-bottom .confidentiality {
+    color: #666; /* Medium gray for confidentiality notice */
+}
+
+hr {
+    border: none; /* Remove default border */
+    height: 4px; /* Set height for the line */
+    background-color:#0093DD; /* Blue color for the line */
+    margin: 2px 0; /* Space above and below the line */
+}

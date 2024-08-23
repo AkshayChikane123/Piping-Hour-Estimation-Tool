@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Quotation</title>
+    <link rel="stylesheet" href="../css/demoquote.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <button id="downloadPdf">Download PDF</button>
+
+    
+    <div class="a4-container page-border">
+        <div class="salesquoteHead">
+            <h1>ESTIMATION</h1>
+            <img src="../images/logo.png" alt="Neilsoft Logo";>
+           
+
+        </div>
+    
+        <hr>
+
+        <div class="header">
+            <div class="first">
+                <ul type="none" id="clientCompanyDetails">
+                    <!-- Client company details will be populated dynamically -->
+                </ul>
+                
+            </div>
+            <div class="second">
+                <ul type="none" id ="neilsoftCompanyDetails">
+         
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="mainbody">
+           
+            <div class="salesquoteid">
+                <ul type="none">
+                    <li>
+                        <p id="quoteid">Estimation Number: </p>
+                    </li>
+                    <li>
+                        <p id="projectName">Project Name:</p>
+                    </li>
+                </ul>
+          
+                <ul type="none">
+                    <li>
+                        <p id="validuntil">Validity: 30 Days</p>
+                    </li>
+                    <li>
+                        <p id="quoteDate">Quote Date:</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="quoteTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Site Name</th>
+                            <th>Total Estimated hours</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody id="quoteTableBody">
+                        <!-- Table body rows will be populated dynamically -->
+                    </tbody>
+                    <tfoot>
+                        
+                            <!-- <td colspan="3"></td> -->
+                            <td colspan="2">Total Estimated Hours Calculated for Project</td>
+                            <td id="totalHours"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- <h2><span id="totalQuotationAmount">Scope Considered for Estimation </span></h2> -->
+            </div>
+        </div>
+        <div class="footer">
+            <p><span id="checkboxSelectedParam">Scope Considered for Estimation :</span></p> 
+
+            <ol id="siteNamesList">
+                <ul id="projectdata"></ul>
+            </ol>
+            <hr>
+          
+            <div class="footer-content">
+                <p class="address">Address: SEZ - Plot No. 21/2, Phase 3, Hinjawadi Rajiv Gandhi Infotech Park, Hinjawadi, Pune, Maharashtra 411057</p>
+                <p class="contact">Phone: 089562 40075 | Email: sales.india@neilsoft.com</p>
+                <div class="footer-bottom">
+                    <p class="page-info">Page <span id="currentPage"></span> of <span id="totalPages"></span></p>
+                    <p class="confidentiality"><small>Confidentiality Notice: This quotation is confidential and intended only for the recipient.</small></p>
+                </div>
+            </div>
+            
+            
+
+        </div>
+
+    </div>
+</div>
+    
+    <script>
+        
+
+
+// Retrieve form data from localStorage
+const formData = JSON.parse(localStorage.getItem('formData'));
+
+// Populate client company details individually
+const clientCompanyDetails = document.getElementById('clientCompanyDetails');
+
+
+// Add 'To,' text
+// const toText = document.createElement('li');
+// toText.textContent = 'Customer Details:';
+// clientCompanyDetails.appendChild(toText);
+
+// Contact person
+const contactLi = document.createElement('li');
+contactLi.innerHTML = `<strong>Customer Details: ${formData.contactPerson}</strong>`;
+clientCompanyDetails.appendChild(contactLi);
+
+//designation
+const designationClient = document.createElement('li');
+designationClient.textContent = ` ${formData.designation}`;
+clientCompanyDetails.appendChild(designationClient);
+
+// Company Name in <h2> tag
+const companyNameH2 = document.createElement('li');
+companyNameH2.innerHTML = `<strong>${formData.companyName}</strong>`;
+clientCompanyDetails.appendChild(companyNameH2);
+
+// Company Address with Country, State, and Postal Code
+const addressString = `${formData.companyAddress}, ${formData.country} ${formData.postalCode}`;
+const addressLi = document.createElement('li');
+addressLi.textContent = addressString;
+clientCompanyDetails.appendChild(addressLi);
+
+// Region
+const regionLi = document.createElement('li');
+regionLi.textContent = `Region: ${formData.region}`;
+clientCompanyDetails.appendChild(regionLi);
+
+// Contact Number
+const contactNumberLi = document.createElement('li');
+contactNumberLi.textContent = `Mobile: ${formData.contactNumber}`;
+clientCompanyDetails.appendChild(contactNumberLi);
+
+// Create and append the email address list item as a link
+const emailAddressLi = document.createElement('li');
+emailAddressLi.innerHTML = `Email: <a href="mailto:${formData.emailAddress}" style="color: blue; text-decoration: underline;">${formData.emailAddress}</a>`;
+clientCompanyDetails.appendChild(emailAddressLi);
+
+// Create and append the website list item as a link
+const websiteDetails = document.createElement('li');
+websiteDetails.innerHTML = `Website: <a href="${formData.website}" style="color: blue; text-decoration: underline;" target="_blank">${formData.website}</a>`;
+clientCompanyDetails.appendChild(websiteDetails);
+
+//Neilsoft details//////////////////////////////////
+
+const neilsoftCompanyDetails = document.getElementById('neilsoftCompanyDetails');
+
+// Contact person neilsoft
+const neilsoftContactperson = document.createElement('li');
+neilsoftContactperson.innerHTML = `<strong>Neilsoft Contact: ${formData.salesPersonName}</strong>`;
+neilsoftCompanyDetails.appendChild(neilsoftContactperson);
+
+
+//designation neilsoft
+const neilsoftDesignation = document.createElement('li');
+neilsoftDesignation.textContent = ` ${formData.salesPersonDesignation}`;
+neilsoftCompanyDetails.appendChild(neilsoftDesignation);
+
+
+
+// Contact Number neilsoft
+const neilsoftContactNo = document.createElement('li');
+neilsoftContactNo.textContent = `Mobile: ${formData.neilsoftPhone}`;
+neilsoftCompanyDetails.appendChild(neilsoftContactNo);
+
+// Email Address for Neilsoft
+const neilsoftEmail = document.createElement('li');
+neilsoftEmail.innerHTML = `Email: <a href="mailto:${formData.neilsoftEmail}" style="color: blue; text-decoration: underline;">${formData.neilsoftEmail}</a>`;
+neilsoftCompanyDetails.appendChild(neilsoftEmail);
+
+
+// Website Address for Neilsoft
+const website = document.createElement('li');
+website.innerHTML = `Website: <a href="http://www.neilsoft.com" style="color: blue; text-decoration: underline;" target="_blank">www.neilsoft.com</a>`;
+neilsoftCompanyDetails.appendChild(website);
+
+
+const projectName = formData.projectName;
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+// Retrieve site data and other data from localStorage
+const siteData = JSON.parse(localStorage.getItem('siteData'));
+const siteSums = JSON.parse(localStorage.getItem('siteSums'));
+const formData = JSON.parse(localStorage.getItem('formData'));
+
+if (!siteData) {
+    console.error("No site data found in localStorage");
+    return;
+}
+
+if (!siteSums) {
+    console.error('No siteSums data found in localStorage');
+    return;
+}
+
+// Get the site names
+const siteNames = Object.keys(siteSums);
+console.log('Site Names:', siteNames);
+
+// Create and populate the siteNamesList
+const siteNamesList = document.getElementById('siteNamesList');
+siteNamesList.innerHTML = ''; // Clear existing content
+
+siteNames.forEach(siteName => {
+    // Create a list item for each site name
+    const siteListItem = document.createElement('li');
+    siteListItem.textContent = siteName;
+
+    // Create an unordered list for projects under this site name
+    const projectList = document.createElement('ul');
+
+    // Retrieve and display project details for each site name
+    const projects = siteData[siteName];
+    Object.keys(projects).forEach(projectName => {
+        const project = projects[projectName];
+
+        // Create and append project details item
+        const projectListItem = document.createElement('li');
+        // projectListItem.textContent = `${projectName}: Section - ${project.section}, Count - ${project.count}, Total Hours - ${project.totalHours}`;
+        projectListItem.textContent = `${projectName}`;
+       
+        projectList.appendChild(projectListItem);
+    });
+
+    // Append the unordered list of projects to the site list item
+    siteListItem.appendChild(projectList);
+
+    // Append the site list item to the ordered list
+    siteNamesList.appendChild(siteListItem);
+});
+
+// Populate the quote table body
+const quoteTableBody = document.getElementById('quoteTableBody');
+let rowIndex = 1;
+let totalHoursSum = 0; // Variable to store the total hours sum
+
+siteNames.forEach(siteName => {
+    const totalEstimatedHours = Object.values(siteSums[siteName]).reduce((sum, hours) => sum + hours, 0);
+    totalHoursSum += totalEstimatedHours; // Add to the total hours sum
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${rowIndex++}</td>
+        <td>${siteName}</td>
+        <td>${totalEstimatedHours.toFixed()} Hours</td>
+    `;
+    quoteTableBody.appendChild(row);
+});
+
+// Update the footer with the total hours
+const totalHoursCell = document.getElementById('totalHours');
+if (totalHoursCell) {
+    totalHoursCell.textContent = `${totalHoursSum.toFixed()} Hours`;
+} else {
+    console.error('Total hours cell not found.');
+}
+
+// Set today's date for Quote Date
+const today = new Date();
+const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+const formattedDateForQuoteId = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+
+// Generate a random alphabet and two random digits
+const randomAlphabet = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // 'A' to 'Z'
+const randomDigits = Math.floor(10 + Math.random() * 90); // 10 to 99
+
+// Append random string to the formatted date
+const formattedDateWithRandomString = `${formattedDateForQuoteId}-${randomAlphabet}${randomDigits}`;
+document.getElementById('projectName').textContent = `Project Name: ${formData.projectName || 'N/A'}`;
+document.getElementById('quoteDate').textContent = `Quote Date: ${formattedDate}`;
+document.getElementById('quoteid').textContent = `Estimation Number: NL-${formattedDateWithRandomString}`;
+});
+
+document.getElementById('downloadPdf').addEventListener('click', function () {
+        const element = document.querySelector('.a4-container');
+        const options = {
+            margin: 0.5,
+            filename: 'sales_quotation.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(options).from(element).save();
+    });
+
+
+    </script>
+</body>
+
+</html>

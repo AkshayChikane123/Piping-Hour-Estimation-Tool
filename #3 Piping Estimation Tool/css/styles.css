@@ -1,0 +1,323 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1; 
+    /* Adjust the opacity to make the background image fainter */
+}
+
+.container,
+.container-middle,
+.container-lower {
+    /* background-color: #f0f0f0; */
+     /* Professional background color */
+    background-color: #f0f0f0;
+    margin-top: 20px; /* Adjust margin top as needed */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 50px; /* Apply border-radius for rounded corners */
+  
+}
+
+
+#table-heading1 {
+
+    text-align: center;
+}
+
+#pipingForm {
+    margin: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    padding: 20px;
+    /* overflow-y: hidden; */
+    
+   
+}
+
+#headingTable {
+    /* margin-top: 50px; */
+    table-layout: auto;
+    margin: 20px;
+    /* background-color: #f0ad4e; */
+   
+}
+
+
+
+
+
+.dropdown-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    padding: 10px;
+    width: auto;
+    border: none;
+
+
+}
+
+.dropdown-container label {
+    align-items: center;
+    padding: 20px;
+    display: flex;
+    text-wrap: none;
+    font-weight: bold;
+}
+
+.dropdown-container select {
+    width: 15%;
+    height: 10%;
+    padding: 5px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+#inputContainer {
+    display: flex;
+    /* margin-right: 14.5%; */
+    padding: 10px;
+    margin-left: 22px;
+    align-items: center;
+    justify-content: start;
+    
+}
+
+#inputContainer label {
+    font-weight: 600;
+    margin-left: 0%
+}
+
+#inputContainer input {
+    
+    margin: 20px;
+    padding: 2px;
+    border-radius: 5px;
+    width: 15%;
+    align-items: end;
+
+}
+
+#inputContainer button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block display */
+    font-size: 16px; /* Set font size */
+    margin: 50px 2px; /* Add margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+#inputContainer button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+#inputContainer1 {
+    display: flex;
+    /* margin-right: 14.5%; */
+    padding: 10px;
+    margin-left: 22px;
+    align-items: center;
+    justify-content: start;
+    
+}
+
+#inputContainer1 label {
+    font-weight: 600;
+    margin-left: 0%
+}
+
+#inputContainer1 input {
+    
+    margin: 20px;
+    padding: 2px;
+    border-radius: 5px;
+    width: 15%;
+    align-items: end;
+
+}
+
+.table-container {
+    margin: 10px;
+    padding: 10px;
+    width: auto;
+    text-align: center;
+    overflow-x: auto;
+    table-layout: auto;
+
+}
+
+.button-container {
+    align-items: center;
+    position: relative;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline;
+}
+
+.btn:hover {
+    color: #9daf4c;
+}
+
+.btn-primary,
+.btn-save,
+.btn-select,
+.btn-calculate {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-default-time {
+    background-color: #f0ad4e;
+
+}
+
+.btn-estimate {
+    background-color: #f0ad4e;
+}
+
+.btn-danger {
+    background-color: #f37d74;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #a09797;
+    text-align: center;
+  
+
+}
+
+th {
+    /* width: 50px; */
+    background-color: rgb(228, 202, 99);
+    font-weight: 600;
+    font-size: 1.1rem;
+    
+}
+
+/* Default Input Styling */
+input[type="number"] {
+    width: 80%;
+    padding: 0px;
+    text-align: center;
+}
+
+#hourlyRate {
+    width: 80%;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Align text to the left */
+}
+
+#hourlyRate::placeholder {
+    text-align: start; /* Align placeholder text to the left */
+}
+
+
+
+
+/* Class to highlight invalid input fields */
+.invalid-input {
+    border: 2px solid red;
+}
+
+/* Class to center text in input fields */
+.centered-input {
+    text-align: center;
+    /* Center the text */
+    padding: 5px;
+    /* Add padding for better visual spacing */
+}
+
+table {
+    table-layout: auto;
+    border-collapse:collapse;
+   
+}
+
+.styled-table {
+    border: 1px solid #000;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 25px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.container-middle {
+    position: relative;
+    margin: 10px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.checkbox-input {
+    transform: scale(1.8);
+    /* Increase the size of the checkbox */
+}
+
+/* Container styles */
+.container-lower {
+    width: auto;
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+    /* background-color: #a09797; */
+
+}
+
+.container-lower table {
+    table-layout: auto;
+    margin: 10px;
+    
+}
+
+.container-lower table tr {
+
+    border-collapse: collapse;
+}
+
+
+
+@media (min-width: 600px) {
+    .container{
+        max-width: 1860px;
+    }
+}

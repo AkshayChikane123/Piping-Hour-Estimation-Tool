@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Quotation</title>
+    <link rel="stylesheet" href="../css/demoquote.css">
+</head>
+
+<body>
+ 
+    <div class="a4-container page-border">
+        
+        <div class="header">
+            <div class="first">
+                <ul type="none" id="clientCompanyDetails">
+                    <!-- Client company details will be populated dynamically -->
+                </ul>
+                
+            </div>
+            <div class="second">
+                <ul type="none">
+                    <li> <img src="../images/logo.png" alt="Neilsoft Logo";></li>
+                    <hr>
+                    <li>
+                        <h2>Neilsoft Pvt. Ltd.</h2>
+                    </li>
+                    <li>SEZ - Plot No. 21/2, Rajiv Gandhi Infotech Park, Phase 3, Hinjawadi, Pune, Maharashtra
+                        411057
+                    </li>
+                    <li>Phone : +91 8956240075</li>
+                    <li>sales.india@neilsoft.com</li>
+                    <li>GSTIN :27AAACN1300P1ZL </li>
+                    <li id="salesPersonName">Sales Representive :</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mainbody">
+            <div class="salesquoteHead">
+                <h1>Sales Quotation</h1>
+            </div>
+            <div class="salesquoteid">
+                <ul type="none">
+                    <li>
+                        <h4 id="quoteid">Quotation Number : </h4>
+                    </li>
+                    <li>
+                        <h4 id="quoteDate">Quote Date:</h4>
+                    </li>
+                </ul>
+                <ul type="none">
+                    <li>
+                        <h4 id="validuntil">Validity: 15 Days</h4>
+                    </li>
+                </ul>
+            </div>
+            <div class="quoteTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Site Name</th>
+                            <th>Total Estimated hours</th>
+                            <th>Hourly Rate ($)</th>
+                            <th>Estimated Price</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quoteTableBody">
+                        <!-- Table body rows will be populated dynamically -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" rowspan="3"></td>
+                            <td colspan="2">Product Total Before Tax</td>
+                            <td id="productTotalBeforeTax"></td>
+                        </tr>
+                        <tr>
+                            <!-- <td colspan="3"></td> -->
+                            <td colspan="2">IGST (5%)</td>
+                            <td id="igstAmount">0</td>
+                        </tr>
+                        <tr>
+                            <!-- <td colspan="3"></td> -->
+                            <td colspan="2">Total Amount</td>
+                            <td id="totalAmount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <h2><span id="totalQuotationAmount">Total Quotation Amount is $ ABC </span></h2>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="terms-condition">
+                <h2>Commercial Terms and Conditions</h2>
+                <ol>
+                    <li><strong>Validity Period</strong>: This quotation is valid for a period of 30 days from the date
+                        of issue.</li>
+                    <li><strong>Payment Terms</strong>: Payment is due within 30 days of the invoice date, unless
+                        otherwise agreed in writing. Late payments will incur interest at a rate of 1.5% per month.</li>
+                    <li><strong>Delivery Terms</strong>: Delivery will be made within 4-6 weeks from the receipt of the
+                        purchase order. Delivery dates are estimates and not guaranteed.</li>
+                    <li><strong>Freight and Shipping Charges</strong>: All freight and shipping charges are the
+                        responsibility of the buyer unless otherwise specified in the quotation.</li>
+                    <li><strong>Taxes and Duties</strong>: All applicable taxes, duties, and levies are the
+                        responsibility of the buyer. The prices quoted are exclusive of any such charges.</li>
+                    <li><strong>Warranty</strong>: We offer a standard 1-year warranty on all products against defects
+                        in materials and workmanship. This warranty does not cover misuse, abuse, or unauthorized
+                        alterations.</li>
+                    <li><strong>Returns and Exchanges</strong>: Returns and exchanges are subject to our return policy.
+                        Products may be returned within 30 days of delivery in their original condition and packaging,
+                        subject to a restocking fee of 15%.</li>
+                    <li><strong>Limitation of Liability</strong>: Our liability is limited to the value of the products
+                        sold. We are not liable for any indirect, incidental, or consequential damages.</li>
+                    <li><strong>Confidentiality</strong>: All information provided in this quotation is confidential and
+                        intended solely for the recipient. It should not be disclosed to any third party without our
+                        prior written consent.</li>
+                    <li><strong>Force Majeure</strong>: We are not liable for any failure or delay in performance due to
+                        causes beyond our control, including but not limited to acts of God, war, strikes, and
+                        government regulations.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+       // Retrieve form data from localStorage
+// // Retrieve form data from localStorage
+// const formData = JSON.parse(localStorage.getItem('formData'));
+
+// // Populate client company details individually
+// const clientCompanyDetails = document.getElementById('clientCompanyDetails');
+
+// // Company Name
+// // Company Name in <h2> tag
+// const companyNameH2 = document.createElement('h2');
+// companyNameH2.textContent = formData.companyName;
+// clientCompanyDetails.appendChild(companyNameH2);
+
+// // Add 'To,' text
+// const toText = document.createElement('li');
+// toText.textContent = 'To,';
+// clientCompanyDetails.appendChild(toText);
+
+// // Contact
+// const contactLi = document.createElement('li');
+// contactLi.textContent = `Contact: ${formData.contact}`;
+// clientCompanyDetails.appendChild(contactLi);
+
+// // Company Address with Country, State, and Postal Code
+// const addressString = `${formData.companyAddress} ${formData.state} ${formData.country} ${formData.postalCode}`;
+// const addressLi = document.createElement('li');
+// addressLi.textContent = ` ${addressString}`;
+// clientCompanyDetails.appendChild(addressLi);
+
+// // Contact Number
+// const contactNumberLi = document.createElement('li');
+// contactNumberLi.textContent = `Phone : ${formData.contactNumber}`;
+// clientCompanyDetails.appendChild(contactNumberLi);
+
+// // Email Address
+// const emailAddressLi = document.createElement('li');
+// emailAddressLi.textContent = `${formData.emailAddress}`;
+// clientCompanyDetails.appendChild(emailAddressLi);
+
+// Retrieve form data from localStorage
+const formData = JSON.parse(localStorage.getItem('formData'));
+
+// Populate client company details individually
+const clientCompanyDetails = document.getElementById('clientCompanyDetails');
+
+// Company Name in <h2> tag
+const companyNameH2 = document.createElement('h2');
+companyNameH2.textContent = formData.companyName;
+clientCompanyDetails.appendChild(companyNameH2);
+
+// Add 'To,' text
+const toText = document.createElement('li');
+toText.textContent = 'To,';
+clientCompanyDetails.appendChild(toText);
+
+// Contact
+const contactLi = document.createElement('li');
+contactLi.textContent = `Contact: ${formData.contact}`;
+clientCompanyDetails.appendChild(contactLi);
+
+// Company Address with Country, State, and Postal Code
+const addressString = `${formData.companyAddress}, ${formData.state}, ${formData.country} ${formData.postalCode}`;
+const addressLi = document.createElement('li');
+addressLi.textContent = addressString;
+clientCompanyDetails.appendChild(addressLi);
+
+// Region
+const regionLi = document.createElement('li');
+regionLi.textContent = `Region: ${formData.region}`;
+clientCompanyDetails.appendChild(regionLi);
+
+// Contact Number
+const contactNumberLi = document.createElement('li');
+contactNumberLi.textContent = `Phone: ${formData.contactNumber}`;
+clientCompanyDetails.appendChild(contactNumberLi);
+
+// Email Address
+const emailAddressLi = document.createElement('li');
+emailAddressLi.textContent = `Email: ${formData.emailAddress}`;
+clientCompanyDetails.appendChild(emailAddressLi);
+
+
+
+// // Country
+// const countryLi = document.createElement('li');
+// countryLi.textContent = `Country: ${formData.country}`;
+// clientCompanyDetails.appendChild(countryLi);
+
+// // State
+// const stateLi = document.createElement('li');
+// stateLi.textContent = `State: ${formData.state}`;
+// clientCompanyDetails.appendChild(stateLi);
+
+// Sales Person Name (Not added as per your requirement to exclude it)
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Retrieve form data from localStorage
+    const formData = JSON.parse(localStorage.getItem('formData'));
+
+    // Retrieve hourlyRate from formData
+    const hourlyRate = parseFloat(formData.hourlyRate);
+
+    // Log hourlyRate from formData
+    console.log('Hourly rate from local storage:', hourlyRate);
+
+    // Populate Sales Person Name
+    document.getElementById('salesPersonName').textContent = `Sales Representative: ${formData.salesPersonName}`;
+
+    // Retrieve the siteSums data from localStorage
+    const siteSums = JSON.parse(localStorage.getItem('siteSums'));
+    if (!siteSums) {
+        console.error('No siteSums data found in localStorage');
+        return;
+    }
+
+    // Get the site names
+    const siteNames = Object.keys(siteSums);
+    console.log('Site Names:', siteNames);
+
+    // Calculate the total estimated hours for each site
+    const totalEstimatedHoursElements = {};
+    siteNames.forEach(siteName => {
+        const siteData = siteSums[siteName];
+        let totalHours = 0;
+
+        for (const key in siteData) {
+            if (siteData.hasOwnProperty(key)) {
+                totalHours += siteData[key];
+            }
+        }
+        totalEstimatedHoursElements[siteName] = totalHours;
+        console.log(`Total Estimated Hours for ${siteName}:`, totalHours);
+    });
+
+    // Populate the quote table body
+    const quoteTableBody = document.getElementById('quoteTableBody');
+    let rowIndex = 1;
+    let productTotalBeforeTax = 0;
+
+    siteNames.forEach(siteName => {
+        const totalEstimatedHours = totalEstimatedHoursElements[siteName];
+        const estimatedPrice = totalEstimatedHours * hourlyRate;
+        productTotalBeforeTax += estimatedPrice;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${rowIndex++}</td>
+            <td>${siteName}</td>
+            <td>${totalEstimatedHours.toFixed()} Hours</td>
+            <td>$ ${hourlyRate.toFixed(2)}</td>
+            <td>$${estimatedPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+            <td>$${estimatedPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        `;
+        quoteTableBody.appendChild(row);
+    });
+
+    // Set the product total before tax
+    document.getElementById('productTotalBeforeTax').textContent = `$ ${productTotalBeforeTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    // Example calculation for IGST
+    const igstRate = 5; // Example IGST rate
+    const igstAmount = (productTotalBeforeTax * igstRate) / 100;
+    document.getElementById('igstAmount').textContent = `$ ${igstAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    // Example calculation for total amount
+    const totalAmount = productTotalBeforeTax + igstAmount;
+    document.getElementById('totalAmount').textContent = `$ ${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    // Example total quotation amount
+    document.getElementById('totalQuotationAmount').textContent = `Total Quotation Amount is $ ${totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    // Set today's date for Quote Date
+    const today = new Date();
+    const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+    const formattedDateForQuoteId = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+    document.getElementById('quoteDate').textContent = `Quote Date: ${formattedDate}`;
+    document.getElementById('quoteid').textContent = `Quotation Number: NL-${formattedDateForQuoteId}`;
+});
+
+    </script>
+</body>
+
+</html>

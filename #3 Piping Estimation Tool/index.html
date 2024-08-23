@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimation Tool : Piping </title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/styles.css">
+    
+</head>
+
+<body style="background-image: url('/images/pipe1.jpg');">
+
+    <!-- <header class="header">
+
+    </header> -->
+    <!-- <nav class="navbar "> 
+        <ul class="navlist">
+            <div class="logo"> <img src="pipe1" alt="pipeimage"></div>
+            <li><a href="#home"></a>Home</li>
+            <li><a href="#about"></a>About</li>
+            <li><a href="#login"></a>Log in</li>
+            <li><a href="#contact"></a>Contact us</li>
+        </ul>
+
+    </nav> -->
+    <!-- Background image parallax -->
+
+
+    <div class="container">
+        <form id="pipingForm">
+            <h2 id="table-heading1"> Project Hours Estimation Tool </h2>
+            <table id="headingTable">
+                <caption>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Site Name</th>
+                        <th>Total Line_counts</th>
+                        <th>Estimated P&ID_Drawings</th>
+                        <th>Bends Tees Reducer_Count</th>
+                        <th>Estimated Equipments</th>
+                        <th>Estimated Valves</th>
+                        <th>Total line segments</th>
+                        <th>Pipe Support</th>
+                        <th>Instrumentation Count</th>
+                        <th>Total No_of_Decks</th>
+                        <th>Avg_Area per_Deck</th>
+                        <th>Complex Factor</th>
+                        <th>Deck Total_Area</th>
+
+
+
+
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="inputRows">
+                    <!-- JavaScript will populate rows here -->
+                </tbody>
+                <tfoot id="subtotalRow">
+                    <tr>
+                        <td colspan="2"><strong>Subtotal:</strong></td>
+                        <td id="subtotalLineCounts"></td>
+                        <td id="subtotalExpectedPID"></td>
+                        <td id="subtotalBendsTeesReducers"></td>
+                        <td id="subtotalEquipments"></td>
+                        <td id="subtotalValves"></td>
+                        <td id="subtotalLineSegments"></td>
+                        <td id="subtotalPipeSupport"></td>
+                        <td id="subtotalcountInstrumentation"></td>
+                        <td id="subtotaldeckNumber"></td>
+                        <td id="subtotalavgArea"></td>
+                        <td id="subtotalcomplexFactor"></td>
+                        <td id="subtotaltotalArea"></td>
+
+
+
+
+                        <td></td>
+                    </tr>
+                </tfoot>
+
+
+            </table>
+            <div class="dropdown-container">
+                <!-- <h3 style="text-align: center; font-weight: bold; white-space: nowrap;">Modelling Confirmations</h3> -->
+                <label> LOD of Modelling</label>
+                <select id="lodDropdown">
+                    <option>LOD 300</option>
+                    <option>LOD 200</option>
+                    <option>LOD 100</option>
+                </select>
+                <label> Pipe Support</label>
+                <select id="pipeSupportDropdown">
+                    <option>Primary</option>
+                    <option>Out of Scope</option>
+                </select>
+                <label> Specification Sheet </label>
+                <select id="specSheetDropdown">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+<!-- 
+                <label> Structural Modelling</label>
+                <select id="structuralModelling">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select> -->
+
+            </div>
+            <div id="inputContainer"></div>
+            <!-- <div id="inputContainer1"></div> -->
+
+            
+
+            <div class="button-container">
+                <button type="button" class="btn btn-primary" onclick="addRow()">Add Project</button>
+                <button type="button" class="btn btn-save" onclick="saveRow(this); scrollToTableContainer()">Save
+                    Project Data</button>
+                <button type="button" class="btn btn-default-time" onclick="openSettingsModal()">Set Default
+                    Time</button>
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+    </div> <!-- Container for the generated table -->
+
+    <div class="container-middle">
+        <!-- <div class="dropdown-container" id="dropdownContainer"></div> -->
+        <div class="table-container" id="tableContainer"></div>
+
+    </div>
+    <div class="container-lower" id="final-container">
+
+    </div>
+
+
+    <!-- Modal structure -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Table to display settings -->
+                    <table class="table table-bordered" id="settingsTable">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Description</th>
+                                <th>Set Time (Min)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- This will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">Apply changes</button>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Offcanvas structure -->
+    <div class="offcanvas offcanvas-center" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+        style="width: 30%;">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">To Generate Quote Add Below Information of Client </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="offcanvasContent">
+            <!-- This will be populated by generateEstimate() -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
